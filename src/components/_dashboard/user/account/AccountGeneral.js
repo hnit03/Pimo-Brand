@@ -138,7 +138,7 @@ export default function AccountGeneral() {
                   <TextField fullWidth label="Địa chỉ" {...getFieldProps('address')} />
                 </Stack>
 
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                {/* <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField
                     select
                     fullWidth
@@ -157,12 +157,12 @@ export default function AccountGeneral() {
                     ))}
                   </TextField>
                   <TextField fullWidth label="Tỉnh" {...getFieldProps('state')} />
-                </Stack>
+                </Stack> */}
 
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                {/* <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <TextField fullWidth label="Thành phố" {...getFieldProps('city')} />
                   <TextField fullWidth label="Mã vùng" {...getFieldProps('zipCode')} />
-                </Stack>
+                </Stack> */}
 
                 <TextField {...getFieldProps('about')} fullWidth multiline minRows={4} maxRows={4} label="Mô tả" />
               </Stack>

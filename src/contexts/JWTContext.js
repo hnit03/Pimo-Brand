@@ -1,11 +1,11 @@
-import { createContext, useEffect, useReducer } from 'react';
+import React,{ createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 // utils
 import axios from '../utils/axios';
 import { isValidToken, setSession } from '../utils/jwt';
 import Cookies from 'universal-cookie';
 import JSCookies from 'js-cookie';
-
+import jwt from 'jwt-decode';
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -65,28 +65,50 @@ AuthProvider.propTypes = {
 
 function AuthProvider({ children }) {
    const [state, dispatch] = useReducer(reducer, initialState);
-
+ 
    useEffect(() => {
       const initialize = async () => {
          try {
             // const accessToken = window.localStorage.getItem('accessToken');
             const accessToken = JSCookies.get('jwt')
-            console.log(accessToken);
+            console.log(jwt(accessToken));
 
             if (accessToken) {
                // setSession(accessToken);
+              const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
+               //  const {data} = await axios.get(`${url}`);
+             fetch(url)
+            .then(res=>res.json())
+            .then(data=>
+              {
 
-               // const response = await axios.get('/api/account/my-account');
-               // const { user } = response.data;
-               const user = JSON.parse(JSCookies.get('user'));
+                 console.log(data ,' hihi');
+               //   const user = JSON.parse(JSCookies.get('user'));
+               const user = {
+                  about: data.brand.description,
+                  address: data.brand.address,
+                  displayName: data.brand.name,
+                  email: data.brand.mail,
+                  id: data.brand.id,
+                  isPublic:true,
+                  phoneNumber: data.brand.phone,
+                  photoURL: data.brand.logo,
+                  role:'Nhãn hàng'
 
-               dispatch({
-                  type: 'INITIALIZE',
-                  payload: {
-                     isAuthenticated: true,
-                     user
-                  }
-               });
+               }
+               console.log(user);
+                 dispatch({
+                    type: 'INITIALIZE',
+                    payload: {
+                       isAuthenticated: true,
+                       user
+                    }
+                 });
+              }
+               )
+               
+                // const { user } = response.data;
+              
             } else {
                dispatch({
                   type: 'INITIALIZE',
@@ -114,16 +136,41 @@ function AuthProvider({ children }) {
    const login = async () => {
       const cookies = new Cookies();
       const response = await axios.post('/api/account/login');
-      const { accessToken, user } = response.data;
-      cookies.set('user', user, { path: '/', maxAge: 60 * 60 * 1000 });
+      const { accessToken } = response.data;
+      // setSession(accessToken)
+      // cookies.set('user', user, { path: '/', maxAge: 60 * 60 * 1000 });
       cookies.set('jwt', accessToken, { path: '/', maxAge: 60 * 60 * 1000 });
-      // setSession(user);
+      const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
+      //  const {data} = await axios.get(`${url}`);
+    fetch(url)
+   .then(res=>res.json())
+   .then(data=>
+     {
+
+        console.log(data);
+      //   const user = JSON.parse(JSCookies.get('user'));
+      const user = {
+         about: data.brand.description,
+         address: data.brand.address,
+         displayName: data.brand.name,
+         email: data.brand.mail,
+         id: data.brand.id,
+         isPublic:true,
+         phoneNumber: data.brand.phone,
+         photoURL: data.brand.logo,
+         role:'Nhãn hàng'
+      }
+      console.log(user);
       dispatch({
          type: 'LOGIN',
          payload: {
             user
          }
       });
+     }
+      )
+      // setSession(user);
+      
    };
 
    const register = async (email, password, firstName, lastName) => {
@@ -145,8 +192,9 @@ function AuthProvider({ children }) {
    };
 
    const logout = async () => {
-      setSession(null);
-      dispatch({ type: 'LOGOUT' });
+      // setSession(null);
+      JSCookies.remove('jwt')
+       dispatch({ type: 'LOGOUT' });
    };
 
    const resetPassword = () => { };

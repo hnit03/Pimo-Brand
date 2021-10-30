@@ -52,7 +52,6 @@ export default function BrandNewForm({ isEdit, currentUser }) {
       role: Yup.string().required('Lĩnh vực là bắt buộc'),
       avatarUrl: Yup.mixed().required('Avatar là bắt buộc')
    });
-
    const formik = useFormik({
       enableReinitialize: true,
       initialValues: {
@@ -87,6 +86,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
    });
 
    const { errors, values, touched, handleSubmit, isSubmitting, setFieldValue, getFieldProps } = formik;
+   console.log(currentUser , " 23 ");
 
    const handleDrop = useCallback(
       (acceptedFiles) => {

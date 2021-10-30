@@ -63,68 +63,88 @@ mock.onGet('/api/user/all').reply(() => {
    });
    return [200, { users }];
 });
+// ----------------------------------------------------------------------
+
+mock.onGet('/api/casting/all').reply(() => {
+   const users = [...Array(24)].map((_, index) => {
+      const setIndex = index + 1;
+      return {
+         id: createId(setIndex),
+         avatarUrl: mockImgAvatar(setIndex),
+         cover: mockImgCover(setIndex),
+         name: faker.name.findName(),
+         follower: faker.datatype.number(),
+         following: faker.datatype.number(),
+         totalPost: faker.datatype.number(),
+         position: sample([
+            'Leader123',
+            'Hr Manager',
+            'UI Designer',
+            'UX Designer',
+            'UI/UX Designer',
+            'Project Manager',
+            'Backend Developer',
+            'Full Stack Designer',
+            'Front End Developer',
+            'Full Stack Developer'
+         ])
+      };
+   });
+   return [200, { users }];
+});
 
 // ----------------------------------------------------------------------
 
 mock.onGet('/api/user/manage-users').reply(async () => {
-   const { data } = await axios.get(`https://api.pimo.studio/api/v1/models`)
-   var NAME = []
-   data.modelList.map(model => (
-      NAME.push(model.model.name)
+   const { data } = await axios.get(`https://api.pimo.studio/api/v1/castings`)
+    var NAME = []
+   data.castings.map(casting => (
+      // console.log('casting ',casting.casting.name)
+       NAME.push(casting.casting.name)
    ));
    var IMAGE = []
-   data.modelList.map(model => (
-      IMAGE.push(model.model.avatar)
+   data.castings.map(casting => (
+      IMAGE.push(casting.casting.poster)
    ));
    var ID = []
-   data.modelList.map(model => (
-      ID.push(model.model.id)
-   ));
-   var EMAIL = []
-   data.modelList.map(model => (
-      EMAIL.push(model.model.mail)
-   ));
-   var PHONE_NUMBER = []
-   data.modelList.map(model => (
-      PHONE_NUMBER.push(model.model.phone)
-   ));
-   var COUNTRY = []
-   data.modelList.map(model => (
-      COUNTRY.push(model.model.country)
-   ));
-   var PROVINCE = []
-   data.modelList.map(model => (
-      PROVINCE.push(model.model.province)
+   data.castings.map(casting => (
+        // console.log('casting ',casting.casting.name)
+      ID.push(casting.casting.id)
    ));
    var ADDRESS = []
-   data.modelList.map(model => (
-      ADDRESS.push(model.model.district)
+   data.castings.map(casting => (
+      ADDRESS.push(casting.casting.address)
    ));
    var STATUS = []
-   data.modelList.map(model => (
-      STATUS.push(model.model.status)
+   data.castings.map(casting => (
+      STATUS.push(casting.casting.status)
    ));
-   var GIFTED = []
-   data.modelList.map(model => (
-      GIFTED.push(model.model.gifted)
+   var OPEN_TIME = []
+   data.castings.map(casting => (
+      OPEN_TIME.push(casting.casting.openTime)
    ));
-   const users = [...Array(20)].map((_, index) => {
+   var DESCRIPTION = []
+   data.castings.map(casting => (
+      DESCRIPTION.push(casting.casting.description)
+   ));
+   const users = [...Array(data.castings.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
          id: createId(setIndex),
          avatarUrl: IMAGE[index],
          name: NAME[index],
-         email: EMAIL[index],
-         phoneNumber: PHONE_NUMBER[index],
+         email:  faker.random.number(),
+         phoneNumber: faker.phone.phoneFormats(),
          address: ADDRESS[index],
          country: 'Vietnam',
-         state: faker.address.state(),
-         city: faker.address.city(),
-         zipCode: faker.address.zipCodeByState(),
-         company: GIFTED[index],
+          state: faker.address.state(),
+         city: DESCRIPTION[index],
+          zipCode: faker.address.zipCodeByState(),
+         company: OPEN_TIME[index],
          isVerified: true,
          status: STATUS[index] ? ('active') : ('banned'),
-         role: ADDRESS[index] + ', ' + COUNTRY[index]
+         role: ADDRESS[index] 
+         // + ', ' + COUNTRY[index]
       }
    })
    return [200, { users }];
@@ -181,7 +201,7 @@ mock.onGet('/api/user/manage-brands').reply(async () => {
          address: ADDRESS[index],
          state: faker.address.state(),
          country: 'Vietnam',
-         city: DESCRIPTION[index],
+          city: DESCRIPTION[index],
          zipCode: faker.address.zipCodeByState(),
          company: GIFTED[index],
          isVerified: true,

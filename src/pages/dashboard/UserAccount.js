@@ -77,7 +77,7 @@ export default function UserAccount() {
     <Page title="User: Account Settings | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading="Account"
+          heading="Thông tin"
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
             { name: 'Người dùng', href: PATH_DASHBOARD.user.root },

@@ -22,9 +22,12 @@ export default function UserCreate() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { name } = useParams();
-  const { userList } = useSelector((state) => state.user);
+   const { userList } = useSelector((state) => state.user);
   const isEdit = pathname.includes('edit');
-  const currentUser = userList.find((user) => paramCase(user.name) === name);
+  var currentUser = null;
+  if(name !== undefined){
+    currentUser= userList.find((user) => paramCase(user.name) === name);
+  }
 
   useEffect(() => {
     dispatch(getUserList());
@@ -34,7 +37,7 @@ export default function UserCreate() {
     <Page title="User: Create a new user | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={!isEdit ? 'Tạo mới người mẫu' : 'Chỉnh sửa thông tin'}
+          heading={!isEdit ? 'Tạo mới chiến dịch' : 'Chỉnh sửa chiến dịch'}
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
             { name: 'Người mẫu', href: PATH_DASHBOARD.user.root },

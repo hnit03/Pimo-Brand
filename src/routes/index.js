@@ -109,6 +109,18 @@ export default function Router() {
           ]
         },
         {
+          path: 'casting',
+          children: [
+            // { path: '/', element: <Navigate to="/dashboard/user/profile" replace /> },
+            // { path: 'profile', element: <UserProfile /> },
+            { path: 'cards', element: <CastingCards /> },
+            // { path: 'list', element: <UserList /> },
+            // { path: 'new', element: <UserCreate /> },
+            // { path: '/:name/edit', element: <UserCreate /> },
+            // { path: 'account', element: <UserAccount /> }
+          ]
+        },
+        {
          path: 'brand',
          children: [
            { path: '/', element: <Navigate to="/dashboard/brand/profile" replace /> },
@@ -256,6 +268,7 @@ const BlogPost = Loadable(lazy(() => import('../pages/dashboard/BlogPost')));
 const BlogNewPost = Loadable(lazy(() => import('../pages/dashboard/BlogNewPost')));
 const UserProfile = Loadable(lazy(() => import('../pages/dashboard/UserProfile')));
 const UserCards = Loadable(lazy(() => import('../pages/dashboard/UserCards')));
+const CastingCards = Loadable(lazy(() => import('../pages/dashboard/CastingCards')));
 const UserList = Loadable(lazy(() => import('../pages/dashboard/UserList')));
 const UserAccount = Loadable(lazy(() => import('../pages/dashboard/UserAccount')));
 const UserCreate = Loadable(lazy(() => import('../pages/dashboard/UserCreate')));

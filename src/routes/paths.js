@@ -59,6 +59,15 @@ export const PATH_DASHBOARD = {
     editById: path(ROOTS_DASHBOARD, '/user/ada-lindgren/edit'),
     account: path(ROOTS_DASHBOARD, '/user/account')
   },
+  casting: {
+    root: path(ROOTS_DASHBOARD, '/casting'),
+    // profile: path(ROOTS_DASHBOARD, '/user/profile'),
+    cards: path(ROOTS_DASHBOARD, '/casting/cards'),
+    // list: path(ROOTS_DASHBOARD, '/user/list'),
+    // newUser: path(ROOTS_DASHBOARD, '/user/new'),
+    // editById: path(ROOTS_DASHBOARD, '/user/ada-lindgren/edit'),
+    // account: path(ROOTS_DASHBOARD, '/user/account')
+  },
   brand: {
    root: path(ROOTS_DASHBOARD, '/brand'),
    profile: path(ROOTS_DASHBOARD, '/brand/profile'),

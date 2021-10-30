@@ -26,34 +26,35 @@ const ICONS = {
 const sidebarConfig = [
    // GENERAL
    // ----------------------------------------------------------------------
-   //   {
-   //     subheader: 'general',
-   //     items: [
-   //       {
-   //         title: 'app',
-   //         path: PATH_DASHBOARD.general.app,
-   //         icon: ICONS.dashboard
-   //       },
-   //       { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-   //       { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics }
-   //     ]
-   //   },
+     {
+      //  subheader: 'general',
+       items: [
+         {
+           title: 'Trang chủ',
+           path: PATH_DASHBOARD.general.app,
+         //   icon: ICONS.dashboard
+         },
+         // { title: 'e-commerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
+         // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics }
+       ]
+     },
 
    // MANAGEMENT
    // ----------------------------------------------------------------------
    {
-      subheader: 'Quản lý hệ thống',
+      subheader: 'Chiến dịch',
       items: [
          // MANAGEMENT : USER
+         // {
+         //    title: 'Danh sách chiến dịch', path: PATH_DASHBOARD.user.cards,
+         // },
          {
-            title: 'Danh sách chiến dịch', path: PATH_DASHBOARD.user.cards,
+            title: 'Danh sách chiến dịch', path: PATH_DASHBOARD.casting.cards,
          },
-         {
-            title: 'Danh sách người mẫu', path: PATH_DASHBOARD.user.list,
-         },
-         {
-            title: 'Danh sách nhãn hàng', path: PATH_DASHBOARD.user.profile,
-         }
+        
+         // {
+         //    title: 'Danh sách nhãn hàng', path: PATH_DASHBOARD.user.profile,
+         // }
 
          // // MANAGEMENT : E-COMMERCE
          // {
@@ -87,24 +88,30 @@ const sidebarConfig = [
 
    // APP
    // ----------------------------------------------------------------------
-   //   {
-   //     subheader: 'app',
-   //     items: [
-   //       {
-   //         title: 'mail',
-   //         path: PATH_DASHBOARD.mail.root,
-   //         icon: ICONS.mail,
-   //         info: <Label color="error">2</Label>
-   //       },
-   //       { title: 'chat', path: PATH_DASHBOARD.chat.root, icon: ICONS.chat },
-   //       { title: 'calendar', path: PATH_DASHBOARD.calendar, icon: ICONS.calendar },
-   //       {
-   //         title: 'kanban',
-   //         path: PATH_DASHBOARD.kanban,
-   //         icon: ICONS.kanban
-   //       }
-   //     ]
-   //   }
+     {
+       subheader: 'Người mẫu',
+       items: [
+         {
+           title: 'Đã tham gia chiến dịch',
+           path: PATH_DASHBOARD.user.profile,
+         //   icon: ICONS.mail,
+         //   info: <Label color="error">2</Label>
+         },
+         {
+            title: 'Người mẫu đã Apply',
+            path: PATH_DASHBOARD.user.cards,
+          //   icon: ICONS.mail,
+          //   info: <Label color="error">2</Label>
+          },
+         // { title: 'chat', path: PATH_DASHBOARD.chat.root, icon: ICONS.chat },
+         // { title: 'calendar', path: PATH_DASHBOARD.calendar, icon: ICONS.calendar },
+         // {
+         //   title: 'kanban',
+         //   path: PATH_DASHBOARD.kanban,
+         //   icon: ICONS.kanban
+         // }
+       ]
+     }
 ];
 
 export default sidebarConfig;

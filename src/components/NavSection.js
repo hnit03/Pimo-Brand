@@ -38,7 +38,8 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
     position: 'absolute',
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
-    backgroundColor: theme.palette.primary.main
+    // backgroundColor: theme.palette.primary.main
+    backgroundColor: '#ff93a6'
   }
 }));
 
@@ -161,7 +162,7 @@ function NavItem({ item, active, isShow }) {
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
       {isShow && (
         <>
-          <ListItemText disableTypography primary={title} />
+          <ListItemText style={{color: '#ff93a6'}} disableTypography primary={title} />
           {info && info}
         </>
       )}

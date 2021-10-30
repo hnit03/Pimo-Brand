@@ -178,7 +178,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
                      Bản cần hỗ trợ?
                      <br /> Hãy xem tài liệu hướng dẫn
                   </Typography>
-                  <Button fullWidth href={PATH_DOCS} target="_blank" variant="contained">
+                  <Button style={{backgroundColor:'#ff93a6'}} fullWidth href={PATH_DOCS} target="_blank" variant="contained">
                      Tài liệu hướng dẫn
                   </Button>
                </DocStyle>

@@ -28,19 +28,21 @@ import { getUserList, deleteUser } from '../../redux/slices/user';
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
 import useSettings from '../../hooks/useSettings';
-// components
+import useAuth from '../../hooks/useAuth';
+ // components
 import Page from '../../components/Page';
 import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
 import SearchNotFound from '../../components/SearchNotFound';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../components/_dashboard/user/list';
+import { log } from 'deck.gl';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
    { id: 'name', label: 'Tên', alignRight: false },
-   { id: 'company', label: 'Tài năng', alignRight: false },
+   { id: 'company', label: 'Thời gian mở', alignRight: false },
    { id: 'role', label: 'Địa chỉ', alignRight: false },
    { id: 'isVerified', label: 'Xác thực', alignRight: false },
    { id: 'status', label: 'Hoạt động', alignRight: false },
@@ -89,11 +91,12 @@ export default function UserList() {
    const [orderBy, setOrderBy] = useState('name');
    const [filterName, setFilterName] = useState('');
    const [rowsPerPage, setRowsPerPage] = useState(5);
-
-   useEffect(() => {
+   // const { user, updateProfile } = useAuth();
+    useEffect(() => {
       dispatch(getUserList());
    }, [dispatch]);
 
+   console.log('userList ',userList);
    const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
@@ -151,7 +154,7 @@ export default function UserList() {
       <Page title="User: List | Minimal-UI">
          <Container maxWidth={themeStretch ? false : 'lg'}>
             <HeaderBreadcrumbs
-               heading="Danh sách người mẫu"
+               heading="Danh sách chiến dịch"
                links={[
                   { name: 'Trang chủ', href: PATH_DASHBOARD.root },
                   { name: 'Người mẫu', href: PATH_DASHBOARD.user.root },
@@ -163,8 +166,9 @@ export default function UserList() {
                      component={RouterLink}
                      to={PATH_DASHBOARD.user.newUser}
                      startIcon={<Icon icon={plusFill} />}
+                     style={{backgroundColor:'#ff93a6'}}
                   >
-                     Thêm người mẫu
+                     Thêm chiến dịch
                   </Button>
                }
             />
@@ -198,7 +202,7 @@ export default function UserList() {
                                     aria-checked={isItemSelected}
                                  >
                                     <TableCell padding="checkbox">
-                                       <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                                       <Checkbox sx={{ '&.Mui-checked': {color: '#ff93a6',},}} checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
                                     </TableCell>
                                     <TableCell component="th" scope="row" padding="none">
                                        <Stack direction="row" alignItems="center" spacing={2}>

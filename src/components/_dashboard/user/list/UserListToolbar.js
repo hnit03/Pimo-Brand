@@ -45,8 +45,10 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
     <RootStyle
       sx={{
         ...(numSelected > 0 && {
-          color: isLight ? 'primary.main' : 'text.primary',
-          bgcolor: isLight ? 'primary.lighter' : 'primary.dark'
+          // color: isLight ? 'primary.main' : 'text.primary',
+          color: isLight ? '#fff' : 'text.primary',
+          bgcolor: isLight ? '#ff93a6' : 'primary.dark'
+          // bgcolor: isLight ? 'primary.lighter' : 'primary.dark'
         })
       }}
     >
@@ -70,7 +72,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName,
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
-            <Icon icon={trash2Fill} />
+            <Icon color="#fff" icon={trash2Fill} />
           </IconButton>
         </Tooltip>
       ) : (

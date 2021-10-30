@@ -6,9 +6,12 @@ import { Box } from '@material-ui/core';
 
 export default function DocIcon({ ...other }) {
   const theme = useTheme();
+  // const PRIMARY_LIGHTER = theme.palette.primary.lighter;
   const PRIMARY_LIGHTER = theme.palette.primary.lighter;
   const PRIMARY_LIGHT = theme.palette.primary.light;
-  const PRIMARY_MAIN = theme.palette.primary.main;
+  // const PRIMARY_LIGHT = theme.palette.primary.light;
+  // const PRIMARY_MAIN = theme.palette.primary.main;
+  const PRIMARY_MAIN = '#ff93a6';
 
   return (
     <Box {...other}>
