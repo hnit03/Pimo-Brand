@@ -49,28 +49,7 @@ export default function UserNewForm({ isEdit, currentUser }) {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(new Date());
   const { enqueueSnackbar } = useSnackbar();
-  const [valueHeight, setValueHeight] = React.useState([160, 250]);
-  const [valueAge, setValueAge] = React.useState([18, 100]);
-  const [measure1, setMeaSure1] = React.useState([20, 47]);
-  const [measure2, setMeaSure2] = React.useState([20, 45]);
-  const [measure3, setMeaSure3] = React.useState([31, 50]);
- 
-  const handleChangeHeight = (event, newValue) => {
-    setValueHeight(newValue);
-  };
-  const handleChangeAge = (event, newValue) => {
-    setValueAge(newValue);
-  };
-  const handleChangeMeaSure1 = (event, newValue) => {
-    setMeaSure1(newValue);
-  };
-  const handleChangeMeaSure2 = (event, newValue) => {
-    setMeaSure2(newValue);
-  };
-  const handleChangeMeaSure3 = (event, newValue) => {
-    setMeaSure3(newValue);
-  };
-
+   
   console.log(currentUser , " ");
   function valuetext(value) {
     return `${value}°C`;
@@ -84,8 +63,6 @@ export default function UserNewForm({ isEdit, currentUser }) {
     company: Yup.string().required("Công ty là bắt buộc"),
     state: Yup.string().required("Tỉnh là bắt buộc"),
     city: Yup.string().required("Thành phố là bắt buộc"),
-    hairColor: Yup.string().required("Màu tóc là bắt buộc"),
-    skinColor: Yup.string().required("Màu da là bắt buộc"),
     sex: Yup.string().required("Giới tính là bắt buộc"),
     style: Yup.string().required("Phong cách là bắt buộc"),
     //  role: Yup.string().required('Role Number is required'),
@@ -340,7 +317,7 @@ export default function UserNewForm({ isEdit, currentUser }) {
                   spacing={{ xs: 3, sm: 2 }}
                 >
                   <p>Mức lương</p>
-                  <p style={{ marginLeft: "17.5rem" }}>Chiều cao</p>
+                  {/* <p style={{ marginLeft: "17.5rem" }}>Chiều cao</p> */}
                 </Stack>
 
                 <Stack
@@ -380,43 +357,22 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     error={Boolean(touched.city && errors.city)}
                     helperText={touched.city && errors.city}
                   /> */}
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={valueHeight}
-                    onChange={handleChangeHeight}
-                    valueLabelDisplay="auto"
-                    min={160}
-                    step={1}
-                    max={250}
-                    // getAriaValueText={valuetext}
-                    sx={{ 
-                      '& .MuiSlider-track': {
-                      color:'#ff93a6'
-                     },
-                     '& .MuiSlider-thumb': {  
-                       backgroundColor: '#ff93a6',
-                     },
-                     '& .MuiSlider-rail': {
-                     opacity: 0.5,
-                     backgroundColor: '#bfbfbf',
-                     },
-                  }}
-                  />
+                 
                 </Stack>
 
-                <Stack
+                {/* <Stack
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 3, sm: 2 }}
                 >
                   <p>Tuổi</p>
 
                   <p style={{ marginLeft: "21rem" }}>Vòng 1</p>
-                </Stack>
+                </Stack> */}
 
-                <Stack
+                {/* <Stack
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 3, sm: 2 }}
-                >
+                > */}
                   {/* <TextField
                     fullWidth
                     label="Quận/Huyện"
@@ -429,58 +385,14 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     label="Mã vùng"
                     {...getFieldProps("zipCode")}
                   /> */}
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={valueAge}
-                    onChange={handleChangeAge}
-                    valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
-                    sx={{ 
-                      '& .MuiSlider-track': {
-                      color:'#ff93a6'
-                     },
-                     '& .MuiSlider-thumb': {  
-                       backgroundColor: '#ff93a6',
-                     },
-                     '& .MuiSlider-rail': {
-                     opacity: 0.5,
-                     backgroundColor: '#bfbfbf',
-                     },
-                  }}
-                  />
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={measure1}
-                    onChange={handleChangeMeaSure1}
-                    valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
-                    sx={{ 
-                      '& .MuiSlider-track': {
-                      color:'#ff93a6'
-                     },
-                     '& .MuiSlider-thumb': {  
-                       backgroundColor: '#ff93a6',
-                     },
-                     '& .MuiSlider-rail': {
-                     opacity: 0.5,
-                     backgroundColor: '#bfbfbf',
-                     },
-                  }}
-                  />
-                </Stack>
+            
+                {/* </Stack> */}
 
-                <Stack
+            
+                {/* <Stack
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 3, sm: 2 }}
-                >
-                  <p>Vòng 2</p>
-                  <p style={{ marginLeft: "20rem" }}>Vòng 3</p>
-                </Stack>
-
-                <Stack
-                  direction={{ xs: "column", sm: "row" }}
-                  spacing={{ xs: 3, sm: 2 }}
-                >
+                > */}
                   {/* <TextField
                     fullWidth
                     label="Quận/Huyện"
@@ -493,51 +405,14 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     label="Mã vùng"
                     {...getFieldProps("zipCode")}
                   /> */}
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={measure2}
-                    onChange={handleChangeMeaSure2}
-                    valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
-                    sx={{ 
-                      '& .MuiSlider-track': {
-                      color:'#ff93a6'
-                     },
-                     '& .MuiSlider-thumb': {  
-                       backgroundColor: '#ff93a6',
-                     },
-                     '& .MuiSlider-rail': {
-                     opacity: 0.5,
-                     backgroundColor: '#bfbfbf',
-                     },
-                  }}
-                  />
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={measure3}
-                    onChange={handleChangeMeaSure3}
-                    valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
-                    sx={{ 
-                      '& .MuiSlider-track': {
-                      color:'#ff93a6'
-                     },
-                     '& .MuiSlider-thumb': {  
-                       backgroundColor: '#ff93a6',
-                     },
-                     '& .MuiSlider-rail': {
-                     opacity: 0.5,
-                     backgroundColor: '#bfbfbf',
-                     },
-                  }}
-                  />
-                </Stack>
+                  
+                {/* </Stack> */}
 
                 
-                <Stack
+                {/* <Stack
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 3, sm: 2 }}
-                >
+                > */}
                   {/* <TextField
                     fullWidth
                     label="Quận/Huyện"
@@ -550,66 +425,8 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     label="Mã vùng"
                     {...getFieldProps("zipCode")}
                   /> */}
-                  <Autocomplete
-                    multiple
-                    id="checkboxes-tags-demo"
-                    options={hairColor}
-                    disableCloseOnSelect
-                    getOptionLabel={(option) => option.title}
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        
-                        />
-                        {option.title}
-                      </li>
-                    )}
-                    style={{ width: 500 }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        {...getFieldProps('hairColor')}
-                        error={Boolean(touched.hairColor && errors.hairColor)}
-                        helperText={touched.hairColor && errors.hairColor}
-                        label="Màu tóc"
-                        placeholder="Favorites"
-                      />
-                    )}
-                  />
-                   <Autocomplete
-                    multiple
-                    id="checkboxes-tags-demo"
-                    options={hairColor}
-                    disableCloseOnSelect
-                    getOptionLabel={(option) => option.title}
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        />
-                        {option.title}
-                      </li>
-                    )}
-                    style={{ width: 500 }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        {...getFieldProps('skinColor')}
-                        error={Boolean(touched.skinColor && errors.skinColor)}
-                        helperText={touched.skinColor && errors.skinColor}
-                        label="Màu da"
-                        placeholder="Favorites"
-                      />
-                    )}
-                  />
-                </Stack>
+                
+                {/* </Stack> */}
 
                
                 <Stack

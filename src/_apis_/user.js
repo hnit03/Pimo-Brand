@@ -96,54 +96,54 @@ mock.onGet('/api/casting/all').reply(() => {
 // ----------------------------------------------------------------------
 
 mock.onGet('/api/user/manage-users').reply(async () => {
-   const { data } = await axios.get(`https://api.pimo.studio/api/v1/castings`)
-    var NAME = []
-   data.castings.map(casting => (
-      // console.log('casting ',casting.casting.name)
-       NAME.push(casting.casting.name)
-   ));
-   var IMAGE = []
-   data.castings.map(casting => (
-      IMAGE.push(casting.casting.poster)
-   ));
-   var ID = []
-   data.castings.map(casting => (
-        // console.log('casting ',casting.casting.name)
-      ID.push(casting.casting.id)
-   ));
-   var ADDRESS = []
-   data.castings.map(casting => (
-      ADDRESS.push(casting.casting.address)
-   ));
-   var STATUS = []
-   data.castings.map(casting => (
-      STATUS.push(casting.casting.status)
-   ));
-   var OPEN_TIME = []
-   data.castings.map(casting => (
-      OPEN_TIME.push(casting.casting.openTime)
-   ));
-   var DESCRIPTION = []
-   data.castings.map(casting => (
-      DESCRIPTION.push(casting.casting.description)
-   ));
-   const users = [...Array(data.castings.length)].map((_, index) => {
+   // const { data } = await axios.get(`https://api.pimo.studio/api/v1/castings`)
+   //  var NAME = []
+   // data.castings.map(casting => (
+   //    // console.log('casting ',casting.casting.name)
+   //     NAME.push(casting.casting.name)
+   // ));
+   // var IMAGE = []
+   // data.castings.map(casting => (
+   //    IMAGE.push(casting.casting.poster)
+   // ));
+   // var ID = []
+   // data.castings.map(casting => (
+   //      // console.log('casting ',casting.casting.name)
+   //    ID.push(casting.casting.id)
+   // ));
+   // var ADDRESS = []
+   // data.castings.map(casting => (
+   //    ADDRESS.push(casting.casting.address)
+   // ));
+   // var STATUS = []
+   // data.castings.map(casting => (
+   //    STATUS.push(casting.casting.status)
+   // ));
+   // var OPEN_TIME = []
+   // data.castings.map(casting => (
+   //    OPEN_TIME.push(casting.casting.openTime)
+   // ));
+   // var DESCRIPTION = []
+   // data.castings.map(casting => (
+   //    DESCRIPTION.push(casting.casting.description)
+   // ));
+   const users = [...Array(20)].map((_, index) => {
       const setIndex = index + 1;
       return {
          id: createId(setIndex),
-         avatarUrl: IMAGE[index],
-         name: NAME[index],
+         avatarUrl: mockImgAvatar(setIndex),
+         name: faker.name.findName(),
          email:  faker.random.number(),
          phoneNumber: faker.phone.phoneFormats(),
-         address: ADDRESS[index],
+         address: faker.datatype.number(),
          country: 'Vietnam',
           state: faker.address.state(),
-         city: DESCRIPTION[index],
+         city: faker.datatype.number(),
           zipCode: faker.address.zipCodeByState(),
-         company: OPEN_TIME[index],
+         company: faker.datatype.number(),
          isVerified: true,
-         status: STATUS[index] ? ('active') : ('banned'),
-         role: ADDRESS[index] 
+         status: true ? ('active') : ('banned'),
+         role:  faker.datatype.number() 
          // + ', ' + COUNTRY[index]
       }
    })

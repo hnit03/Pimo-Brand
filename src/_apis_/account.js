@@ -7,6 +7,9 @@ import { auth, provider } from '../adapter/firebase';
 //
 import mock from './mock';
 import axios from 'axios';
+import * as React from 'react';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 // ----------------------------------------------------------------------
 
@@ -37,8 +40,9 @@ const users = [
 mock.onPost('/api/account/login').reply(async () => {
    try {
       const authData = await auth.signInWithPopup(provider)
+      
          .then(async (result) => {
-            var token = result.user.multiFactor.user.accessToken;
+             var token = result.user.multiFactor.user.accessToken;
             var mail = result.user.email;
             var postData = {
                token: token,
@@ -71,21 +75,22 @@ mock.onPost('/api/account/login').reply(async () => {
                   }
                   const accessToken = res.data.jwt;
                   return [{ accessToken, user }];
+                 
+
                })
             return await axiosData;
          })
          .catch(function (error) {
-            console.log(error);
-         });
+              console.log(error);
+          });
       const accessToken = authData[0].accessToken
       const user = authData[0].user
-      return [200, { accessToken, user }];
+       return [200, { accessToken, user }];
    } catch (error) {
-      console.error(error);
-      return [500, { message: 'Internal server error' }];
+          return [500, { message: 'Internal server error' }];
    }
 });
-
+ 
 // ----------------------------------------------------------------------
 
 mock.onPost('/api/account/register').reply(async (config) => {

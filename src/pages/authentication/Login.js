@@ -2,7 +2,7 @@ import { capitalCase } from 'change-case';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
-import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography, Button } from '@material-ui/core';
+import { Box, Card, Stack, Link, Tooltip, Container, Typography, Button } from '@material-ui/core';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // hooks
@@ -13,9 +13,13 @@ import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { LoginForm } from '../../components/authentication/login';
 import AuthFirebaseSocials from '../../components/authentication/AuthFirebaseSocial';
-
+import React from 'react';
+ import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 // ----------------------------------------------------------------------
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex'
@@ -43,9 +47,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Login() {
-  const { method, login } = useAuth();
 
+
+export default function Login() {
+  const { user,method, login } = useAuth();
+  const [open, setOpen] = React.useState(false);
+
+  console.log(user ," hihihi");
   const handleLoginAuth0 = async () => {
     try {
       await login();
@@ -53,10 +61,20 @@ export default function Login() {
       console.error(error);
     }
   };
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setOpen(false);
+  };
   return (
     <RootStyle title="Login | Minimal-UI">
-
+      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>

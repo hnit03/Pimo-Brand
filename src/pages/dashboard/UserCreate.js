@@ -22,11 +22,12 @@ export default function UserCreate() {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { name } = useParams();
+  console.log('name ',name)
    const { userList } = useSelector((state) => state.user);
   const isEdit = pathname.includes('edit');
   var currentUser = null;
   if(name !== undefined){
-    currentUser= userList.find((user) => paramCase(user.name) === name);
+     currentUser= userList.find((user) => console.log(user) );
   }
 
   useEffect(() => {

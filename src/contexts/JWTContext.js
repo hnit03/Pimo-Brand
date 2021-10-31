@@ -6,6 +6,8 @@ import { isValidToken, setSession } from '../utils/jwt';
 import Cookies from 'universal-cookie';
 import JSCookies from 'js-cookie';
 import jwt from 'jwt-decode';
+import Login from '../pages/authentication/Login'
+ 
 // ----------------------------------------------------------------------
 
 const initialState = {
@@ -85,15 +87,24 @@ function AuthProvider({ children }) {
                  console.log(data ,' hihi');
                //   const user = JSON.parse(JSCookies.get('user'));
                const user = {
-                  about: data.brand.description,
-                  address: data.brand.address,
-                  displayName: data.brand.name,
-                  email: data.brand.mail,
-                  id: data.brand.id,
+                   about: data.brand.brand.description,
+                  address: data.brand.brand.address,
+                  displayName: data.brand.brand.name,
+                  email: data.brand.brand.mail,
+                  id: data.brand.brand.id,
                   isPublic:true,
-                  phoneNumber: data.brand.phone,
-                  photoURL: data.brand.logo,
+                  phoneNumber: data.brand.brand.phone,
+                  photoURL: data.brand.brand.logo,
                   role:'Nhãn hàng'
+                  // about: 'data.brand.description',
+                  //  address: 'data.brand.address',
+                  // displayName: 'data.brand.name',
+                  // email: 'data.brand.mail',
+                  // id: 'data.brand.id',
+                  // isPublic:true,
+                  // phoneNumber: 'data.brand.phone',
+                  // photoURL: 'data.brand.logo',
+                  // role:'Nhãn hàng'
 
                }
                console.log(user);
@@ -134,45 +145,52 @@ function AuthProvider({ children }) {
    }, []);
 
    const login = async () => {
+   
       const cookies = new Cookies();
       const response = await axios.post('/api/account/login');
-      const { accessToken } = response.data;
+        const { accessToken } = response.data;
       // setSession(accessToken)
       // cookies.set('user', user, { path: '/', maxAge: 60 * 60 * 1000 });
       cookies.set('jwt', accessToken, { path: '/', maxAge: 60 * 60 * 1000 });
-      const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
-      //  const {data} = await axios.get(`${url}`);
-    fetch(url)
-   .then(res=>res.json())
-   .then(data=>
-     {
-
-        console.log(data);
-      //   const user = JSON.parse(JSCookies.get('user'));
-      const user = {
-         about: data.brand.description,
-         address: data.brand.address,
-         displayName: data.brand.name,
-         email: data.brand.mail,
-         id: data.brand.id,
-         isPublic:true,
-         phoneNumber: data.brand.phone,
-         photoURL: data.brand.logo,
-         role:'Nhãn hàng'
-      }
-      console.log(user);
-      dispatch({
-         type: 'LOGIN',
-         payload: {
-            user
+      const role = jwt(accessToken)[Object.keys(jwt(accessToken))[3]];
+      console.log('role ',role)
+      if(role === 'Brand'){
+          const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
+         //  const {data} = await axios.get(`${url}`);
+       fetch(url)
+      .then(res=>res.json())
+      .then(data=>
+        {
+           console.log(data.brand.brand , " lala");
+         //   const user = JSON.parse(JSCookies.get('user'));
+         const user = {
+            about: data.brand.brand.description,
+            address: data.brand.brand.address,
+            displayName: data.brand.brand.name,
+            email: data.brand.brand.mail,
+            id: data.brand.brand.id,
+            isPublic:true,
+            phoneNumber: data.brand.brand.phone,
+            photoURL: data.brand.brand.logo,
+            role:'Nhãn hàng'
          }
-      });
-     }
-      )
+         console.log(user);
+         dispatch({
+            type: 'LOGIN',
+            payload: {
+               user
+            }
+         });
+        }
+         )
+      } else{
+      //   console.log('alalalalalala') 
+         <Login/> 
+        }
       // setSession(user);
       
    };
-
+   
    const register = async (email, password, firstName, lastName) => {
       const response = await axios.post('/api/account/register', {
          email,
@@ -213,9 +231,12 @@ function AuthProvider({ children }) {
             updateProfile
          }}
       >
+           
          {children}
       </AuthContext.Provider>
    );
 }
+
+
 
 export { AuthContext, AuthProvider };
