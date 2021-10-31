@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getUserList } from '../../redux/slices/user';
+import { getUserList,getCastings } from '../../redux/slices/user';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -23,15 +23,17 @@ export default function UserCreate() {
   const { pathname } = useLocation();
   const { name } = useParams();
   console.log('name ',name)
-   const { userList } = useSelector((state) => state.user);
+   const { users } = useSelector((state) => state.user);
+   console.log('userList ',users)
+
   const isEdit = pathname.includes('edit');
   var currentUser = null;
   if(name !== undefined){
-     currentUser= userList.find((user) => console.log(user) );
+     currentUser= users.find((user) => paramCase(user.name) === name);
   }
 
   useEffect(() => {
-    dispatch(getUserList());
+    dispatch(getCastings());
   }, [dispatch]);
 
   return (

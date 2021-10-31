@@ -151,10 +151,11 @@ function AuthProvider({ children }) {
         const { accessToken } = response.data;
       // setSession(accessToken)
       // cookies.set('user', user, { path: '/', maxAge: 60 * 60 * 1000 });
-      cookies.set('jwt', accessToken, { path: '/', maxAge: 60 * 60 * 1000 });
+    
       const role = jwt(accessToken)[Object.keys(jwt(accessToken))[3]];
       console.log('role ',role)
-      if(role === 'Brand'){
+      if(role === 'Admin'){
+         cookies.set('jwt', accessToken, { path: '/', maxAge: 60 * 60 * 1000 });
           const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
          //  const {data} = await axios.get(`${url}`);
        fetch(url)
@@ -184,8 +185,9 @@ function AuthProvider({ children }) {
         }
          )
       } else{
-      //   console.log('alalalalalala') 
-         <Login/> 
+        console.log('alalalalalala') 
+      return [200, { message: true }];
+         // <Login/> 
         }
       // setSession(user);
       

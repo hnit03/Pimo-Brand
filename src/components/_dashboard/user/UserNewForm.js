@@ -445,7 +445,7 @@ export default function UserNewForm({ isEdit, currentUser }) {
                     label="Mã vùng"
                     {...getFieldProps("zipCode")}
                   /> */}
-                  <Autocomplete
+                  {/* <Autocomplete
                     multiple
                     id="checkboxes-tags-demo"
                     options={hairColor}
@@ -473,36 +473,41 @@ export default function UserNewForm({ isEdit, currentUser }) {
                         placeholder="Favorites"
                       />
                     )}
-                  />
-                   <Autocomplete
-                    multiple
-                    id="checkboxes-tags-demo"
-                    options={hairColor}
-                    disableCloseOnSelect
-                    getOptionLabel={(option) => option.title}
-                    renderOption={(props, option, { selected }) => (
-                      <li {...props}>
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={selected}
-                        />
-                        {option.title}
-                      </li>
-                    )}
-                    style={{ width: 500 }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        {...getFieldProps('sex')}
-                        error={Boolean(touched.sex && errors.sex)}
-                        helperText={touched.sex && errors.sex}
-                        label="Giới tính"
-                        placeholder="Favorites"
-                      />
-                    )}
-                  />
+                  /> */}
+                    <TextField
+                    select
+                    fullWidth
+                    label="Phong cách"
+                    placeholder="style"
+                    {...getFieldProps("style")}
+                    SelectProps={{ native: true }}
+                    error={Boolean(touched.style && errors.style)}
+                    helperText={touched.style && errors.style}
+                    >
+                    <option value="" />
+                    {countries.map((option) => (
+                      <option key={option.code} value={option.label}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
+                  <TextField
+                    select
+                    fullWidth
+                    label="Giới tính"
+                    placeholder="sex"
+                    {...getFieldProps("sex")}
+                    SelectProps={{ native: true }}
+                    error={Boolean(touched.sex && errors.sex)}
+                    helperText={touched.sex && errors.sex}
+                    >
+                    <option value="" />
+                    {countries.map((option) => (
+                      <option key={option.code} value={option.label}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </TextField>
                 </Stack>
                 <TextField {...getFieldProps('description')} fullWidth multiline minRows={4} maxRows={4} label="Mô tả" />
                 {/* <Stack

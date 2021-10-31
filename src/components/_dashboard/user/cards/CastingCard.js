@@ -97,8 +97,11 @@ CastingCard.propTypes = {
 };
 
 export default function CastingCard({ user, ...other }) {
-  const { name, cover, position, follower, totalPost, avatarUrl, following } =
+  // const { name, cover, position, follower, totalPost, avatarUrl, following } =
+  //   user;
+    const { name, cover, address, follower, totalPost, avatarUrl, following } =
     user;
+    console.log('user ',user)
   const dispatch = useDispatch();
   const handleDeleteUser = (userId) => {
     dispatch(deleteUser(userId));
@@ -130,7 +133,7 @@ export default function CastingCard({ user, ...other }) {
             transform: 'translateY(-50%)'
           }}
         /> */}
-        <CoverImgStyle alt="cover" src={cover} />
+        <CoverImgStyle alt="cover" src={avatarUrl} />
       </CardMediaStyle>
       <div
         style={{
@@ -158,7 +161,7 @@ export default function CastingCard({ user, ...other }) {
         align="center"
         sx={{ color: "text.secondary" }}
       >
-        {position}
+        {address}
       </Typography>
 
       <Box sx={{ textAlign: "center", mt: 2, mb: 2.5 }}>

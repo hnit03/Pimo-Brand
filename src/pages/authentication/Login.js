@@ -52,7 +52,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Login() {
   const { user,method, login } = useAuth();
   const [open, setOpen] = React.useState(false);
-
   console.log(user ," hihihi");
   const handleLoginAuth0 = async () => {
     try {
@@ -70,11 +69,11 @@ export default function Login() {
   };
   return (
     <RootStyle title="Login | Minimal-UI">
-      <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
+      {/* <Snackbar open={true} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           This is a success message!
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>

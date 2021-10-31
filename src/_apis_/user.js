@@ -70,25 +70,41 @@ mock.onGet('/api/casting/all').reply(() => {
       const setIndex = index + 1;
       return {
          id: createId(setIndex),
-         avatarUrl: mockImgAvatar(setIndex),
-         cover: mockImgCover(setIndex),
+         avatarUrl: mockImgCover(setIndex),
          name: faker.name.findName(),
-         follower: faker.datatype.number(),
-         following: faker.datatype.number(),
-         totalPost: faker.datatype.number(),
-         position: sample([
-            'Leader123',
-            'Hr Manager',
-            'UI Designer',
-            'UX Designer',
-            'UI/UX Designer',
-            'Project Manager',
-            'Backend Developer',
-            'Full Stack Designer',
-            'Front End Developer',
-            'Full Stack Developer'
-         ])
-      };
+         email:  faker.random.number(),
+         phoneNumber: faker.phone.phoneFormats(),
+         address: faker.datatype.number(),
+         country: 'Vietnam',
+          state: faker.address.state(),
+         city: faker.datatype.number(),
+          zipCode: faker.address.zipCodeByState(),
+         company: faker.datatype.number(),
+         isVerified: true,
+         status: true ? ('active') : ('banned'),
+         role:  faker.datatype.number() 
+       }
+      // return {
+      //    id: createId(setIndex),
+      //    avatarUrl: mockImgAvatar(setIndex),
+      //    cover: mockImgCover(setIndex),
+      //    name: faker.name.findName(),
+      //    follower: faker.datatype.number(),
+      //    following: faker.datatype.number(),
+      //    totalPost: faker.datatype.number(),
+      //    position: sample([
+      //       'Leader123',
+      //       'Hr Manager',
+      //       'UI Designer',
+      //       'UX Designer',
+      //       'UI/UX Designer',
+      //       'Project Manager',
+      //       'Backend Developer',
+      //       'Full Stack Designer',
+      //       'Front End Developer',
+      //       'Full Stack Developer'
+      //    ])
+      // };
    });
    return [200, { users }];
 });
@@ -225,7 +241,6 @@ mock.onGet('/api/user/social/followers').reply(() => {
          isFollowed: faker.datatype.boolean()
       };
    });
-
    return [200, { followers }];
 });
 

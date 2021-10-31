@@ -76,7 +76,6 @@ mock.onPost('/api/account/login').reply(async () => {
                   const accessToken = res.data.jwt;
                   return [{ accessToken, user }];
                  
-
                })
             return await axiosData;
          })
