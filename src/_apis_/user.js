@@ -5,7 +5,8 @@ import { mockImgCover, mockImgFeed, mockImgAvatar } from '../utils/mockImages';
 //
 import mock from './mock';
 import axios from 'axios';
-
+import JSCookies from 'js-cookie';
+import jwt from 'jwt-decode';
 // ----------------------------------------------------------------------
 
 const createId = (index) => `fc68bad5-d430-4033-b8f8-4bc069dc0ba0-${index}`;
@@ -65,48 +66,110 @@ mock.onGet('/api/user/all').reply(() => {
 });
 // ----------------------------------------------------------------------
 
-mock.onGet('/api/casting/all').reply(() => {
-   const users = [...Array(24)].map((_, index) => {
-      const setIndex = index + 1;
-      return {
-         id: createId(setIndex),
-         avatarUrl: mockImgCover(setIndex),
-         name: faker.name.findName(),
-         email:  faker.random.number(),
-         phoneNumber: faker.phone.phoneFormats(),
-         address: faker.datatype.number(),
-         country: 'Vietnam',
-          state: faker.address.state(),
-         city: faker.datatype.number(),
-          zipCode: faker.address.zipCodeByState(),
-         company: faker.datatype.number(),
-         isVerified: true,
-         status: true ? ('active') : ('banned'),
-         role:  faker.datatype.number() 
-       }
-      // return {
-      //    id: createId(setIndex),
-      //    avatarUrl: mockImgAvatar(setIndex),
-      //    cover: mockImgCover(setIndex),
-      //    name: faker.name.findName(),
-      //    follower: faker.datatype.number(),
-      //    following: faker.datatype.number(),
-      //    totalPost: faker.datatype.number(),
-      //    position: sample([
-      //       'Leader123',
-      //       'Hr Manager',
-      //       'UI Designer',
-      //       'UX Designer',
-      //       'UI/UX Designer',
-      //       'Project Manager',
-      //       'Backend Developer',
-      //       'Full Stack Designer',
-      //       'Front End Developer',
-      //       'Full Stack Developer'
-      //    ])
-      // };
-   });
-   return [200, { users }];
+mock.onGet('/api/casting/all').reply(async () => {
+   const accessToken = JSCookies.get('jwt')
+    const id = jwt(accessToken)[Object.keys(jwt(accessToken))[4]];
+    console.log('id ',id)
+  const { data } = await axios.get(`https://api.pimo.studio/api/v1/castings/brand/${id}`)
+    //   const { data } =  axios.get(`https://api.pimo.studio/api/v1/castings/brand/${id}`)
+   //   const url = `https://api.pimo.studio/api/v1/castings/brand/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
+   //   fetch(url)
+   //   .then(res=>res.json())
+      console.log(data.castings.length);
+      var NAME = []
+      data.castings.map(casting => (
+          NAME.push(casting.casting.name)
+      ));
+       var IMAGE = []
+      data.castings.map(casting => (
+         IMAGE.push(casting.casting.poster)
+      ));
+ 
+      var ID = []
+      data.castings.map(casting => (
+         ID.push(casting.casting.id)
+      ));
+ 
+      var ADDRESS = []
+      data.castings.map(casting => (
+         ADDRESS.push(casting.casting.address)
+      ));
+      var STATUS = []
+      data.castings.map(casting => (
+         STATUS.push(casting.casting.status)
+      ));
+      var DESCRIPTION = []
+      data.castings.map(casting => (
+         DESCRIPTION.push(casting.casting.description)
+      ));
+      var OPEN_TIME = []
+      data.castings.map(casting => (
+         OPEN_TIME.push(casting.casting.openTime)
+      ));
+      var CLOSE_TIME = []
+      data.castings.map(casting => (
+         CLOSE_TIME.push(casting.casting.closeTime)
+      ));
+      var SALARY = []
+      data.castings.map(casting => (
+         SALARY.push(casting.casting.salary)
+      ));
+      var STYLE =[];
+      data.castings.map((casting,index) => (
+         STYLE.push(casting.listStyle[0])
+         // STYLE = casting.listStyle
+      ));
+      console.log('STYLE ',STYLE)
+      var SEX =[];
+      data.castings.map((casting,index) => (
+         SEX.push(casting.listGender[0])
+         // SEX = casting.listGender
+      ));
+      console.log('STYLE ',SEX)
+      const users = [...Array(data.castings.length)].map((_, index) => {
+          const setIndex = index + 1;
+         return {
+            id: createId(setIndex),
+            avatarUrl: IMAGE[index],
+            name: NAME[index],
+            email:  faker.random.number(),
+            phoneNumber: STYLE[index],
+            address: ADDRESS[index],
+            country: 'Vietnam',
+             state: OPEN_TIME[index],
+            city: CLOSE_TIME[index],
+             zipCode: SALARY[index],
+            company: DESCRIPTION[index],
+            isVerified: true,
+            status: STATUS[index] ? ('active') : ('banned'),
+            role:  SEX[index]
+          }
+        
+         // return {
+         //    id: createId(setIndex),
+         //    avatarUrl: mockImgAvatar(setIndex),
+         //    cover: mockImgCover(setIndex),
+         //    name: faker.name.findName(),
+         //    follower: faker.datatype.number(),
+         //    following: faker.datatype.number(),
+         //    totalPost: faker.datatype.number(),
+         //    position: sample([
+         //       'Leader123',
+         //       'Hr Manager',
+         //       'UI Designer',
+         //       'UX Designer',
+         //       'UI/UX Designer',
+         //       'Project Manager',
+         //       'Backend Developer',
+         //       'Full Stack Designer',
+         //       'Front End Developer',
+         //       'Full Stack Developer'
+         //    ])
+         // };
+      });
+      return [200, { users }];
+ 
+   
 });
 
 // ----------------------------------------------------------------------

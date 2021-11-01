@@ -6,7 +6,7 @@ import facebookFill from '@iconify/icons-eva/facebook-fill';
 import instagramFilled from '@iconify/icons-ant-design/instagram-filled';
 // material
 import { alpha, styled } from '@material-ui/core/styles';
-import { Box, Card, Grid, Avatar, Tooltip, Divider, Typography, IconButton } from '@material-ui/core';
+import { Box, Card, Grid, Avatar, Tooltip, Divider, Typography, IconButton,Button } from '@material-ui/core';
 // utils
 import { fShortenNumber } from '../../../../utils/formatNumber';
 //
@@ -124,13 +124,34 @@ export default function UserCard({ user, ...other }) {
         ))}
       </Box>
 
-      <Divider />
+      {/* <Divider /> */}
 
-      <Grid container sx={{ py: 3, textAlign: 'center' }}>
-        {InfoItem(follower)}
+      {/* <Grid container sx={{ py: 3, alignSelf: 'center' }}> */}
+      <div style={{display:'flex',justifyContent: 'space-around',paddingBottom:'1.5rem'}}>
+      <Button
+                     variant="contained"
+                    //  component={RouterLink}
+                    //  to={PATH_DASHBOARD.user.newUser}
+                    //  startIcon={<Icon icon={plusFill} />}
+                     style={{backgroundColor:'#00AB55'}}
+                  >
+                     Chấp nhận
+                  </Button>
+                  <Button
+
+                     variant="contained"
+                    //  component={RouterLink}
+                    //  to={PATH_DASHBOARD.user.newUser}
+                    //  startIcon={<Icon icon={plusFill} />}
+                     style={{backgroundColor:'#FF3030'}}
+                  >
+                     Từ chối
+                  </Button>
+      </div>
+                {/* {InfoItem(follower)}
         {InfoItem(following)}
-        {InfoItem(totalPost)}
-      </Grid>
+        {InfoItem(totalPost)} */}
+      {/* </Grid> */}
     </Card>
   );
 }

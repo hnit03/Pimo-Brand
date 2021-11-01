@@ -30,7 +30,7 @@ export default function AccountGeneral() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const { user, updateProfile } = useAuth();
-
+  console.log('hihihi ',user)
   const UpdateUserSchema = Yup.object().shape({
     displayName: Yup.string().required('Name is required')
   });

@@ -34,8 +34,8 @@ export default function UserCards() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
-
-  useEffect(() => {
+  console.log('lalala ' ,users)
+   useEffect(() => {
     dispatch(getCastings());
   }, [dispatch]);
 

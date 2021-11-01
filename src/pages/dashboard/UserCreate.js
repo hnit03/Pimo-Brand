@@ -31,7 +31,11 @@ export default function UserCreate() {
   if(name !== undefined){
      currentUser= users.find((user) => paramCase(user.name) === name);
   }
+  var STYLE;
+  users.forEach((user) => {
+    console.log('user1231 ',user.phoneNumber)
 
+  })
   useEffect(() => {
     dispatch(getCastings());
   }, [dispatch]);
@@ -48,7 +52,7 @@ export default function UserCreate() {
           ]}
         />
 
-        <UserNewForm isEdit={isEdit} currentUser={currentUser} />
+        <UserNewForm isEdit={isEdit} currentUser={currentUser} listUser={users} />
       </Container>
     </Page>
   );

@@ -154,7 +154,7 @@ function AuthProvider({ children }) {
     
       const role = jwt(accessToken)[Object.keys(jwt(accessToken))[3]];
       console.log('role ',role)
-      if(role === 'Admin'){
+      if(role === 'Brand'){
          cookies.set('jwt', accessToken, { path: '/', maxAge: 60 * 60 * 1000 });
           const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
          //  const {data} = await axios.get(`${url}`);

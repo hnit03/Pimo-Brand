@@ -15,14 +15,20 @@ import {
   Divider,
   Typography,
   IconButton,
+  Button,
 } from "@material-ui/core";
 // utils
 import { fShortenNumber } from "../../../../utils/formatNumber";
 //
 import SvgIconStyle from "../../../SvgIconStyle";
-import { UserMoreMenu,CastingMoreMenu } from "../../../../components/_dashboard/user/list";
+import {
+  UserMoreMenu,
+  CastingMoreMenu,
+} from "../../../../components/_dashboard/user/list";
 import { useDispatch, useSelector } from "../../../../redux/store";
 import { getUserList, deleteUser } from "../../../../redux/slices/user";
+import TodayIcon from "@mui/icons-material/Today";
+import LocationOn from "@material-ui/icons/LocationOn";
 
 // ----------------------------------------------------------------------
 
@@ -91,7 +97,24 @@ function InfoItem(number) {
     </Grid>
   );
 }
-
+function formatDate(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var amPm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + amPm;
+  return (
+    date.getFullYear() +
+    "-" +
+    parseInt(date.getMonth() + 1) +
+    "-" +
+    date.getDate() +
+    " " +
+    strTime
+  );
+}
 CastingCard.propTypes = {
   user: PropTypes.object.isRequired,
 };
@@ -99,9 +122,23 @@ CastingCard.propTypes = {
 export default function CastingCard({ user, ...other }) {
   // const { name, cover, position, follower, totalPost, avatarUrl, following } =
   //   user;
-    const { name, cover, address, follower, totalPost, avatarUrl, following } =
-    user;
-    console.log('user ',user)
+  const {
+    name,
+    cover,
+    address,
+    follower,
+    totalPost,
+    avatarUrl,
+    following,
+    company,
+    state,
+    city,
+    status,
+  } = user;
+  // console.log("status ", status);
+  var open_time = formatDate(new Date(state));
+  var close_time = formatDate(new Date(city));
+  // console.log('user ',user)
   const dispatch = useDispatch();
   const handleDeleteUser = (userId) => {
     dispatch(deleteUser(userId));
@@ -148,32 +185,108 @@ export default function CastingCard({ user, ...other }) {
           marginTop: "0.3rem",
           marginRight: "0.3rem",
           width: "7%",
-          height: "7%",
+          height: "1.6rem",
         }}
       >
         <CastingMoreMenu onDelete={() => handleDeleteUser(1)} userName={name} />
       </div>
-      <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
+      {/* <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
         {name}
+      </Typography> */}
+      <Typography
+        style={{ marginTop: "1.5rem" }}
+        variant="subtitle1"
+        align="center"
+        sx={{ mt: 6 }}
+      >
+        {name}
+      </Typography>
+      <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginLeft: "0.7rem",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <TodayIcon style={{ color: "grey" }} />
+            <span style={{ marginLeft: "1rem", color: "grey" }}>
+              Ngày bắt đầu :
+            </span>
+          </div>
+          <p style={{ color: "grey", marginRight: "0.7rem" }}>{open_time}</p>
+        </div>
+      </Typography>
+      <Typography
+        style={{ margin: 0 }}
+        variant="subtitle1"
+        align="center"
+        sx={{ mt: 6 }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginLeft: "0.7rem",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <TodayIcon style={{ color: "grey" }} />
+            <span style={{ marginLeft: "1rem", color: "grey" }}>
+              Ngày kết thúc :
+            </span>
+          </div>
+          <p style={{ color: "grey", marginRight: "0.7rem" }}>{close_time}</p>
+        </div>
       </Typography>
       <Typography
         variant="body2"
         align="center"
         sx={{ color: "text.secondary" }}
       >
-        {address}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "start",
+            marginLeft: "0.7rem",
+          }}
+        >
+          <LocationOn style={{ color: "grey" }} />
+          <span style={{ marginLeft: "0.3rem", color: "grey" }}>{address}</span>
+        </div>
       </Typography>
 
-      <Box sx={{ textAlign: "center", mt: 2, mb: 2.5 }}>
+      {/* <Box sx={{ textAlign: "center", mt: 2, mb: 2.5 }}>
         {SOCIALS.map((social) => (
           <Tooltip key={social.name} title={social.name}>
             <IconButton>{social.icon}</IconButton>
           </Tooltip>
         ))}
-      </Box>
+      </Box> */}
 
-      <Divider />
-
+      {/* <Divider /> */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          paddingBottom: "1.5rem",
+          paddingTop: "1.5rem",
+        }}
+      >
+        <Button
+          variant="contained"
+          //  component={RouterLink}
+          //  to={PATH_DASHBOARD.user.newUser}
+          //  startIcon={<Icon icon={plusFill} />}
+          style={{
+            backgroundColor:
+              status === "active" ? "rgb(255, 147, 166)" : "grey",
+          }}
+        >
+          {status === "active" ? "Đang diễn ra" : "Đã kết thúc"}
+        </Button>
+      </div>
       {/* <Grid container sx={{ py: 3, textAlign: 'center' }}>
         {InfoItem(follower)}
         {InfoItem(following)}

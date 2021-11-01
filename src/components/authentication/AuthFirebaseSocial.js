@@ -16,16 +16,27 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function AuthFirebaseSocials() {
   const { login, loginWithFaceBook, loginWithTwitter } = useAuth();
   const [checkLogin,setCheckLogin] = React.useState(false);
+  // const [checkAccount,setCheckAccount] = React.useState(false);
  
   React.useEffect(() => {
     console.log(checkLogin)
     // document.getElementById('error').style.display = 'block';
     if(checkLogin === true){
       document.getElementById('error').style.display = 'block';
-      setTimeout(() => document.getElementById('error').style.display = 'none',5000)
+      setTimeout(() => {
+        document.getElementById('error').style.display = 'none'
+        setCheckLogin(false)
+       },5000)
     }else{
       document.getElementById('error').style.display = 'none';
     }
+
+    // if(checkAccount === true){
+    //   document.getElementById('error1').style.display = 'block';
+    //   setTimeout(() => ,5000)
+    // }else{
+    //   document.getElementById('error1').style.display = 'none';
+    // }
   }, [checkLogin])
    const handleLoginGoogle = async () => {
    try {
@@ -34,18 +45,21 @@ export default function AuthFirebaseSocials() {
         try{
           if(result[1].message){
             setCheckLogin(true)
+            // setCheckAccount(false)
             // console.log(checkLogin)
           }
        
         }catch(err){
           setCheckLogin(false)
-          console.log(checkLogin , " aaaa")
-        }
+          // setCheckAccount(false)
+         }
         
       
       });
     } catch (error) {
-        console.error(error);
+      // setCheckLogin(false)
+      // setCheckAccount(true)
+         console.error(error);
     }
   };
 
@@ -73,7 +87,12 @@ export default function AuthFirebaseSocials() {
         </Alert>
         <br></br>
      </div>
-    
+     {/* <div style={{display:'none'}} id="error1">
+         <Alert severity="error" sx={{ width: '100%' }}>
+          Bạn chưa có tài khoản
+        </Alert>
+        <br></br>
+     </div> */}
       <Stack direction="row" spacing={2}>
         <Button fullWidth size="large" color="inherit" variant="outlined" onClick={handleLoginGoogle}>
           <Icon icon={googleFill} color="#DF3E30" height={24} />
