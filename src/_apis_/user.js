@@ -66,16 +66,57 @@ mock.onGet('/api/user/all').reply(() => {
 });
 // ----------------------------------------------------------------------
 
-mock.onGet('/api/castingApply/all').reply( async () => {
-   const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=1`)
-   console.log('apply ',data)
-   const users = [...Array(24)].map((_, index) => {
+mock.onGet('/api/castingApply/manageApply').reply( async () => {
+   const accessToken = JSCookies.get('jwt')
+   console.log('accessToken ',accessToken)
+   let axiosConfig = {
+      headers: {
+         'Content-Type': 'application/json;charset=UTF-8',
+         "Access-Control-Allow-Origin": "*",
+         'authorization': 'Bearer ' + accessToken
+      }
+   };
+   const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=1`,axiosConfig)
+   console.log('apply ',data.applyList)
+   var NAME = []
+   data.applyList.map(apply => (
+       NAME.push(apply.model.name)
+   ));
+   console.log('NAME ',NAME)
+   var PHONE = []
+   data.applyList.map(apply => (
+      PHONE.push(apply.model.phone)
+   ));
+   var GIFT = []
+   data.applyList.map(apply => (
+      GIFT.push(apply.model.gifted)
+   ));
+   var COUNTRY = []
+   data.applyList.map(apply => (
+      COUNTRY.push(apply.model.country)
+   ));
+   var PROVINCE = []
+   data.applyList.map(apply => (
+      PROVINCE.push(apply.model.province)
+   ));
+   var DISTRICT = []
+   data.applyList.map(apply => (
+      DISTRICT.push(apply.model.district)
+   ));
+   var IMAGE = []
+   data.applyList.map(apply => (
+      IMAGE.push(apply.model.avatar)
+   ));
+   const users = [...Array(data.applyList.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
          id: createId(setIndex),
-         avatarUrl: mockImgAvatar(setIndex),
-         cover: mockImgCover(setIndex),
-         name: faker.name.findName(),
+         avatarUrl: IMAGE[index],
+         cover:IMAGE[index],
+         name: NAME[index],
+         phone : PHONE[index],
+         address : COUNTRY[index] + ", "+ PROVINCE[index] + ", "+ DISTRICT[index],
+         gift : GIFT[index],
          follower: faker.datatype.number(),
          following: faker.datatype.number(),
          totalPost: faker.datatype.number(),

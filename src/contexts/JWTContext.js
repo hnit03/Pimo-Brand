@@ -87,14 +87,14 @@ function AuthProvider({ children }) {
                  console.log(data ,' hihi');
                //   const user = JSON.parse(JSCookies.get('user'));
                const user = {
-                   about: data.brand.brand.description,
-                  address: data.brand.brand.address,
-                  displayName: data.brand.brand.name,
-                  email: data.brand.brand.mail,
-                  id: data.brand.brand.id,
+                   about: data.brand.description,
+                  address: data.brand.address,
+                  displayName: data.brand.name,
+                  email: data.brand.mail,
+                  id: data.brand.id,
                   isPublic:true,
-                  phoneNumber: data.brand.brand.phone,
-                  photoURL: data.brand.brand.logo,
+                  phoneNumber: data.brand.phone,
+                  photoURL: data.brand.logo,
                   role:'Nhãn hàng'
                   // about: 'data.brand.description',
                   //  address: 'data.brand.address',
@@ -165,14 +165,14 @@ function AuthProvider({ children }) {
            console.log(data.brand.brand , " lala");
          //   const user = JSON.parse(JSCookies.get('user'));
          const user = {
-            about: data.brand.brand.description,
-            address: data.brand.brand.address,
-            displayName: data.brand.brand.name,
-            email: data.brand.brand.mail,
-            id: data.brand.brand.id,
+            about: data.brand.description,
+            address: data.brand.address,
+            displayName: data.brand.name,
+            email: data.brand.mail,
+            id: data.brand.id,
             isPublic:true,
-            phoneNumber: data.brand.brand.phone,
-            photoURL: data.brand.brand.logo,
+            phoneNumber: data.brand.phone,
+            photoURL: data.brand.logo,
             role:'Nhãn hàng'
          }
          console.log(user);

@@ -151,22 +151,22 @@ export default function UserList() {
       <Page title="User: List | Minimal-UI">
          <Container maxWidth={themeStretch ? false : 'lg'}>
             <HeaderBreadcrumbs
-               heading="Danh sách nhãn hàng"
+               heading="Danh sách người mẫu"
                links={[
                   { name: 'Trang chủ', href: PATH_DASHBOARD.root },
                   { name: 'Nhãn hàng', href: PATH_DASHBOARD.user.root },
                   { name: 'Danh sách' }
                ]}
-               action={
-                  <Button
-                     variant="contained"
-                     component={RouterLink}
-                     to={PATH_DASHBOARD.brand.newUser}
-                     startIcon={<Icon icon={plusFill} />}
-                  >
-                     Thêm nhãn hàng
-                  </Button>
-               }
+               // action={
+               //    <Button
+               //       variant="contained"
+               //       component={RouterLink}
+               //       to={PATH_DASHBOARD.brand.newUser}
+               //       startIcon={<Icon icon={plusFill} />}
+               //    >
+               //       Thêm nhãn hàng
+               //    </Button>
+               // }
             />
 
             <Card>

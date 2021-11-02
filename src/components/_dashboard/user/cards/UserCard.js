@@ -80,7 +80,7 @@ UserCard.propTypes = {
 };
 
 export default function UserCard({ user, ...other }) {
-  const { name, cover, position, follower, totalPost, avatarUrl, following } = user;
+  const { name, cover, position, follower, totalPost, avatarUrl, following,phone,address,gift } = user;
   return (
     <Card {...other}>
       <CardMediaStyle>
@@ -112,17 +112,26 @@ export default function UserCard({ user, ...other }) {
       <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
         {name}
       </Typography>
-      <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
-        {position}
+      <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
+        {gift}
       </Typography>
+      <Typography style={{margin:0}} variant="subtitle1" align="center" sx={{ mt: 6 }}>
+        {address}
+      </Typography>
+      <Typography style={{margin:0,marginBottom:'1.5rem'}} variant="subtitle1" align="center" sx={{ mt: 6 }}>
+        {phone}
+      </Typography>
+      {/* <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
+        {position}
+      </Typography> */}
 
-      <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>
+      {/* <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>
         {SOCIALS.map((social) => (
           <Tooltip key={social.name} title={social.name}>
             <IconButton>{social.icon}</IconButton>
           </Tooltip>
         ))}
-      </Box>
+      </Box> */}
 
       {/* <Divider /> */}
 

@@ -306,7 +306,7 @@ export function getCastingApply() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/castingApply/all');
+      const response = await axios.get('/api/castingApply/manageApply');
       dispatch(slice.actions.getUsersSuccess(response.data.users));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
