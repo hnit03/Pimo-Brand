@@ -43,27 +43,63 @@ UserNewForm.propTypes = {
   isEdit: PropTypes.bool,
   currentUser: PropTypes.object,
 };
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
 export default function UserNewForm({ isEdit, currentUser,listUser }) {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(new Date());
-  var [checkBoxStyle, setCheckBoxStyle] = React.useState([]);
-  var [checkSex, setCheckSex] = React.useState([]);
+   var [checkBoxStyle, setCheckBoxStyle] = React.useState([]);
+  var [checkBoxSex, setCheckBoxSex] = React.useState([
+    { id: 1, name: "Nam", checked: false },
+    { id: 2, name: "Nữ" , checked: false },
+    { id: 3, name: "Khác", checked: false },
+ ]);
+  var [isCheckStyle, setIsCheckStyle] = React.useState(true);
+  var [isCheckSex, setIsCheckSex] = React.useState(true);
 
   const { enqueueSnackbar } = useSnackbar();
-  const sex = [
-    { id: 1, phoneNumber:{name: "Nam"}, checked: false },
-    { id: 2, phoneNumber:{name: "Nữ"} , checked: false },
-    { id: 3, phoneNumber:{name: "Khác"}, checked: false },
- ];;
+ 
   console.log(currentUser, " currentUser");
-  // console.log(listUser[0].phoneNumber.name, " listUser ");
-   
   function valuetext(value) {
     return `${value}°C`;
   }
+  // console.log('checkBoxStyle ',checkBoxStyle)
+ if(!isCheckStyle){
+  if(checkBoxStyle.length > 0  && currentUser !== undefined) {
+    setIsCheckStyle(true)
+    for(var i = 0; i < checkBoxStyle.length; i++){
+      for(var j = 0; j < currentUser.phoneNumber.length; j++){
+          if(checkBoxStyle[i].id === currentUser.phoneNumber[j].id){
+            checkBoxStyle[i].checked = true;
+          }
+      }
+     }
+  }
+ }
+ if(!isCheckSex){
+  if(checkBoxSex.length > 0  && currentUser !== undefined) {
+    setIsCheckSex(true)
+    for(var m = 0; m < checkBoxSex.length; m++){
+      for(var n = 0; n < currentUser.role.length; n++){
+          if(checkBoxSex[m].id === currentUser.role[n].id){
+            checkBoxSex[m].checked = true;
+          }
+      }
+     }
+  }
+ }
+  // console.log('checkBoxStyle After ',checkBoxStyle)
+  React.useEffect(() => {
+    fetch('https://api.pimo.studio/api/v1/styles')
+    .then(res=>res.json())
+    .then(json=>{
+      json.style.map((value) => {
+        value.checked = false;
+      })
+      setIsCheckStyle(false)
+      setIsCheckSex(false)
+       setCheckBoxStyle(json.style)
+    })
+   
+ }, []);
+
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required("Tên là bắt buộc"),
     email: Yup.string().required("Email là bắt buộc").email(),
@@ -137,13 +173,39 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
     [setFieldValue],
   );
 
+  const handlerFilter = (e, value, item) => {
+    switch (value) {
+       case 1:
+        const updateSex = checkBoxSex.map((value) => {
+            
+          value.checked = value.id === item.id ? !value.checked : value.checked;
+          // console.log('updateSex ',value)
+          return value;
+       });
+       setCheckBoxSex(updateSex);
+
+          break;
+       case 2:
+          const updateStyle = checkBoxStyle.map((value) => {
+            
+             value.checked = value.id === item.id ? !value.checked : value.checked;
+            //  console.log('updateStyle ',value)
+             return value;
+          });
+          setCheckBoxStyle(updateStyle);
+          break;
+    
+        default:
+    }
+ };
+
   return (
     <FormikProvider value={formik}>
       <Form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
             <Card sx={{ py: 10, px: 3 }}>
-              {isEdit && (
+              {/* {isEdit && (
                 <Label
                   color={values.status !== "active" ? "error" : "success"}
                   sx={{
@@ -154,9 +216,8 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                   }}
                 >
                   {values.status === "banned" ? "Ngừng hoạt động" : "Hoạt động"}
-                  {/* {values.status} */}
-                </Label>
-              )}
+                 </Label>
+              )} */}
 
               <Box sx={{ mb: 5 }}>
                 <UploadAvatar
@@ -186,7 +247,7 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                 </FormHelperText>
               </Box>
 
-              {isEdit && (
+              {/* {isEdit && (
                 <FormControlLabel
                   labelPlacement="start"
                   control={
@@ -220,7 +281,7 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                     justifyContent: "space-between",
                   }}
                 />
-              )}
+              )} */}
             </Card>
           </Grid>
 
@@ -239,7 +300,15 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                     helperText={touched.name && errors.name}
                   />
                
-                  <TextField
+               <TextField
+                    fullWidth
+                    label="Địa điểm"
+                    {...getFieldProps("address")}
+                    SelectProps={{ native: true }}
+                    error={Boolean(touched.address && errors.address)}
+                    helperText={touched.address && errors.address}
+                  />
+                  {/* <TextField
                     select
                     fullWidth
                     label="Địa điểm"
@@ -256,7 +325,7 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                         {option.address}
                       </option>
                     ))}
-                  </TextField>
+                  </TextField> */}
                 </Stack>
 
                 <Stack
@@ -273,10 +342,11 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                           helperText="thời gian bắt đầu lớn hơn kết thúc"
                           error={Boolean(touched.state && errors.state)}
                           // helperText={touched.address && errors.state}
-                          {...getFieldProps("state")}
+                         
                         />
                       )}
-                      value={values.state}
+                      // value={values.state}
+                      {...getFieldProps("state")}
                       label="thời gian bắt đầu"
                       onChange={(newValue) => {
                         setFieldValue("state", newValue);
@@ -294,7 +364,8 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                         />
                       )}
                       label="thời gian kết thúc"
-                      value={values.city}
+                      // value={values.city}
+                      {...getFieldProps("city")}
                        onChange={(newValue) => {
                         setFieldValue("city", newValue);
                       }}
@@ -319,7 +390,9 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                   <Slider
                     aria-label="Temperature"
                     // defaultValue={values.zipCode}
-                    value={values.zipCode}
+                    // value={values.zipCode}
+                     max={10000}
+                    {...getFieldProps("zipCode")}
                     onChange={(e, newValue) => {
                       setFieldValue("zipCode", newValue);
                     }}
@@ -343,82 +416,47 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                 </Stack>
 
                 
-
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 3, sm: 2 }}
                 >
-                  {/* <TextField
-                    fullWidth
-                    label="Quận/Huyện"
-                    {...getFieldProps("address")}
-                    error={Boolean(touched.address && errors.address)}
-                    helperText={touched.address && errors.address}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Mã vùng"
-                    {...getFieldProps("zipCode")}
-                  /> */}
-                  {/* {listUser !== undefined ? (
-                           <MyFormControlLabel
-                              listStyle={listUser}
-                              checkedStyle={checkBoxStyle}
-                              setCheckedStyle={setCheckBoxStyle}
-                           />
-                        ) : null}
-                        {listUser !== undefined ? (
-                           <MyFormControlLabel
-                              listStyle={listUser}
-                              checkedStyle={sex}
-                              setCheckedStyle={setCheckSex}
-                           />
-                        ) : null} */}
-                 
-                 {sex.map((value, index) => (
-                            <FormControlLabel
-                            control={
-                               <Checkbox
-                                  tabIndex={-1}
-                                  checked={value.checked}
-                                  value={value.id}
-                                  checkedIcon={<Check   />}
-                                  icon={<Check  />}
-                                  // onClick={(input) => handlerFilter(input, item)}
-                                  
-                               //    classes={{
-                               //       checked: classes.checked,
-                               //       root: classes.checkRoot,
-                               //    }}
-                               />
-                            }
-                           //  classes={{ label: classes.label, root: classes.labelRoot }}
-                            label={value.phoneNumber.name}
-                           //  className={classes.formControl}
-                         />
-                        ))}
-                          {listUser.map((value, index) => (
-                            <FormControlLabel
-                            control={
-                               <Checkbox
-                                  tabIndex={-1}
-                                  checked={value.checked}
-                                  value={value.id}
-                                  checkedIcon={<Check   />}
-                                  icon={<Check  />}
-                                  // onClick={(input) => handlerFilter(input, item)}
-                                  
-                               //    classes={{
-                               //       checked: classes.checked,
-                               //       root: classes.checkRoot,
-                               //    }}
-                               />
-                            }
-                           //  classes={{ label: classes.label, root: classes.labelRoot }}
-                            label={value.phoneNumber.name}
-                           //  className={classes.formControl}
-                         />
-                        ))}
+                  <p>Giới tính</p>
+                  {/* <p style={{ marginLeft: "17.5rem" }}>Chiều cao</p> */}
+                </Stack>
+
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 3, sm: 2 }}
+                 >
+                 {
+                checkBoxSex.map((value, index) => (
+                  <FormControlLabel
+                  // style={{border:'1px dashed black',width:'20%',margin:0}}
+                  control={
+                     <Checkbox
+                     sx={{ '&.Mui-checked': {color: '#ff93a6',},}}
+                        tabIndex={-1}
+                        checked={value.checked}
+                        value={value.id}
+                        checkedIcon={<Check   />}
+                        icon={<Check  />}
+                        onClick={(input) => {
+                          console.log('oooo')
+                          handlerFilter(input, 1,value)
+                        }}
+                        
+                     //    classes={{
+                     //       checked: classes.checked,
+                     //       root: classes.checkRoot,
+                     //    }}
+                     />
+                  }
+                 //  classes={{ label: classes.label, root: classes.labelRoot }}
+                  label={value.name}
+                 //  className={classes.formControl}
+               />
+              ))}
+                        
                   {/* <Autocomplete
                     multiple
                     id="checkboxes-tags-demo"
@@ -455,6 +493,86 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
 
                
                 </Stack>
+
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 3, sm: 2 }}
+                >
+                  <p>Phong cách</p>
+                  {/* <p style={{ marginLeft: "17.5rem" }}>Chiều cao</p> */}
+                </Stack>
+                <Stack
+
+                  // direction={{ xs: "column", sm: "row" }}
+                  spacing={{ xs: 3, sm: 2 }}
+                 
+                >
+                  <div  style={{display: 'flex',justifyContent:'space-between',marginBottom:'0.5rem'}}>
+                  {checkBoxStyle.map((value, index) => (
+                            <>
+                           {(index < 4) ? (
+                              <FormControlLabel
+                              
+                              style={{border:'1px dashed black',width:'20%',margin:0}}
+                              control={
+                                 <Checkbox
+                                 sx={{ '&.Mui-checked': {color: '#ff93a6',},}}
+                                    tabIndex={-1}
+                                    checked={value.checked}
+                                    value={value.id}
+                                    checkedIcon={<Check   />}
+                                    icon={<Check  />}
+                                    onClick={(input) => handlerFilter(input,2, value)}
+                                    
+                                 //    classes={{
+                                 //       checked: classes.checked,
+                                 //       root: classes.checkRoot,
+                                 //    }}
+                                 />
+                              }
+                             //  classes={{ label: classes.label, root: classes.labelRoot }}
+                              label={value.name}
+                             //  className={classes.formControl}
+                           />
+                           ) : null}
+                            
+                         </>
+                        ))}
+                  </div>
+                  <div  style={{display: 'flex',justifyContent:'space-between'}}>
+                  {checkBoxStyle.map((value, index) => (
+                            <>
+                           {(index >= 4) ? (
+                              <FormControlLabel
+                              style={{border:'1px dashed black',width:'20%',margin:0}}
+                              control={
+                                 <Checkbox
+                                    tabIndex={-1}
+                                    checked={value.checked}
+                                    value={value.id}
+                                    checkedIcon={<Check   />}
+                                    icon={<Check  />}
+                                    onClick={(input) => handlerFilter(input,2, value)}
+                                    
+                                 //    classes={{
+                                 //       checked: classes.checked,
+                                 //       root: classes.checkRoot,
+                                 //    }}
+                                 />
+                              }
+                             //  classes={{ label: classes.label, root: classes.labelRoot }}
+                              label={value.name}
+                             //  className={classes.formControl}
+                           />
+                           ) : null}
+                            
+                         </>
+                        ))}
+                  </div>
+                         
+                       
+                </Stack>
+
                 <TextField
                   {...getFieldProps("company")}
                   error={Boolean(touched.company && errors.company)}

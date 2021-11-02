@@ -302,6 +302,19 @@ export function getUsers() {
 }
 // ----------------------------------------------------------------------
 
+export function getCastingApply() {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.get('/api/castingApply/all');
+      dispatch(slice.actions.getUsersSuccess(response.data.users));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+// ----------------------------------------------------------------------
+
 export function getCastings() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());

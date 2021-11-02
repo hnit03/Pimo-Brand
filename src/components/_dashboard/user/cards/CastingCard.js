@@ -194,11 +194,11 @@ export default function CastingCard({ user, ...other }) {
         {name}
       </Typography> */}
       <Typography
-        style={{ marginTop: "1.5rem" }}
+        style={{ marginTop: "1.5rem",height:'2rem',fontSize:'1.25rem' }}
         variant="subtitle1"
         align="center"
-        sx={{ mt: 6 }}
-      >
+        
+       >
         {name}
       </Typography>
       <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
@@ -209,13 +209,13 @@ export default function CastingCard({ user, ...other }) {
             marginLeft: "0.7rem",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <div style={{ display: "flex", justifyContent: "space-around",marginBottom:'0.5rem' }}>
             <TodayIcon style={{ color: "grey" }} />
-            <span style={{ marginLeft: "1rem", color: "grey" }}>
+            <span style={{ marginLeft: "1rem", color: "grey",fontSize:'0.95rem'  }}>
               Ngày bắt đầu :
             </span>
           </div>
-          <p style={{ color: "grey", marginRight: "0.7rem" }}>{open_time}</p>
+          <p style={{ color: "grey", marginRight: "0.7rem",fontSize:'0.95rem'   }}>{open_time}</p>
         </div>
       </Typography>
       <Typography
@@ -231,13 +231,13 @@ export default function CastingCard({ user, ...other }) {
             marginLeft: "0.7rem",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <div style={{ display: "flex", justifyContent: "space-around",marginBottom:'0.5rem' }}>
             <TodayIcon style={{ color: "grey" }} />
-            <span style={{ marginLeft: "1rem", color: "grey" }}>
+            <span style={{ marginLeft: "1rem", color: "grey",fontSize:'0.95rem'   }}>
               Ngày kết thúc :
             </span>
           </div>
-          <p style={{ color: "grey", marginRight: "0.7rem" }}>{close_time}</p>
+          <p style={{ color: "grey", marginRight: "0.7rem",fontSize:'0.95rem'   }}>{close_time}</p>
         </div>
       </Typography>
       <Typography
@@ -269,12 +269,13 @@ export default function CastingCard({ user, ...other }) {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around",
+          justifyContent: "start",
           paddingBottom: "1.5rem",
           paddingTop: "1.5rem",
         }}
       >
         <Button
+        disabled={true}
           variant="contained"
           //  component={RouterLink}
           //  to={PATH_DASHBOARD.user.newUser}
@@ -282,7 +283,11 @@ export default function CastingCard({ user, ...other }) {
           style={{
             backgroundColor:
               status === "active" ? "rgb(255, 147, 166)" : "grey",
-          }}
+              color:'#fff',
+              displayPosition: 'flex',
+              float:'left',
+              marginLeft:'1rem'
+           }}
         >
           {status === "active" ? "Đang diễn ra" : "Đã kết thúc"}
         </Button>

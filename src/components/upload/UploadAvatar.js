@@ -12,13 +12,14 @@ import { fData } from '../../utils/formatNumber';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  width: 144,
-  height: 144,
+  width: '20rem',
+  height: 300,
   margin: 'auto',
-  borderRadius: '50%',
+  // borderRadius: '50%',
   padding: theme.spacing(1),
-  border: `1px dashed ${theme.palette.grey[500_32]}`
-}));
+  border: `1px dashed ${theme.palette.grey[500_32]}`,
+   objectFit: 'cover'
+ }));
 
 const DropZoneStyle = styled('div')({
   zIndex: 0,
@@ -27,7 +28,7 @@ const DropZoneStyle = styled('div')({
   outline: 'none',
   display: 'flex',
   overflow: 'hidden',
-  borderRadius: '50%',
+  // borderRadius: '50%',
   position: 'relative',
   alignItems: 'center',
   justifyContent: 'center',
@@ -37,8 +38,8 @@ const DropZoneStyle = styled('div')({
     '& .placeholder': {
       zIndex: 9
     }
-  }
-});
+  },
+ });
 
 const PlaceholderStyle = styled('div')(({ theme }) => ({
   display: 'flex',

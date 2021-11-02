@@ -27,15 +27,17 @@ export default function UserCreate() {
    console.log('userList ',users)
 
   const isEdit = pathname.includes('edit');
-  var currentUser = null;
+ 
   if(name !== undefined){
+    var currentUser = null;
      currentUser= users.find((user) => paramCase(user.name) === name);
   }
-  var STYLE;
-  users.forEach((user) => {
-    console.log('user1231 ',user.phoneNumber)
+  // console.log('currentUser111 ',currentUser.phoneNumber)
+  // var STYLE;
+  // users.forEach((user) => {
+  //   console.log('user1231 ',user.phoneNumber)
 
-  })
+  // })
   useEffect(() => {
     dispatch(getCastings());
   }, [dispatch]);

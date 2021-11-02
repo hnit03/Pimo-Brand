@@ -66,6 +66,37 @@ mock.onGet('/api/user/all').reply(() => {
 });
 // ----------------------------------------------------------------------
 
+mock.onGet('/api/castingApply/all').reply( async () => {
+   const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=1`)
+   console.log('apply ',data)
+   const users = [...Array(24)].map((_, index) => {
+      const setIndex = index + 1;
+      return {
+         id: createId(setIndex),
+         avatarUrl: mockImgAvatar(setIndex),
+         cover: mockImgCover(setIndex),
+         name: faker.name.findName(),
+         follower: faker.datatype.number(),
+         following: faker.datatype.number(),
+         totalPost: faker.datatype.number(),
+         position: sample([
+            'Leader',
+            'Hr Manager',
+            'UI Designer',
+            'UX Designer',
+            'UI/UX Designer',
+            'Project Manager',
+            'Backend Developer',
+            'Full Stack Designer',
+            'Front End Developer',
+            'Full Stack Developer'
+         ])
+      };
+   });
+   return [200, { users }];
+});
+// ----------------------------------------------------------------------
+
 mock.onGet('/api/casting/all').reply(async () => {
    const accessToken = JSCookies.get('jwt')
     const id = jwt(accessToken)[Object.keys(jwt(accessToken))[4]];
@@ -116,16 +147,17 @@ mock.onGet('/api/casting/all').reply(async () => {
       ));
       var STYLE =[];
       data.castings.map((casting,index) => (
-         STYLE.push(casting.listStyle[0])
+         STYLE.push(casting.listStyle)
          // STYLE = casting.listStyle
       ));
-      console.log('STYLE ',STYLE)
+      // console.log('STYLE ',STYLE)
       var SEX =[];
       data.castings.map((casting,index) => (
-         SEX.push(casting.listGender[0])
+         SEX.push(casting.listGender)
          // SEX = casting.listGender
       ));
-      console.log('STYLE ',SEX)
+      // console.log('STYLE ',SEX)
+      // console.log('STYLE ',data.castings)
       const users = [...Array(data.castings.length)].map((_, index) => {
           const setIndex = index + 1;
          return {
