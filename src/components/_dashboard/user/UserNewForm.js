@@ -102,17 +102,25 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required("Tên là bắt buộc"),
-    email: Yup.string().required("Email là bắt buộc").email(),
-    phoneNumber: Yup.string().required("Điện thoại là bắt buộc"),
-    country: Yup.string().required("Quốc gia là bắt buộc"),
+    
+    // email: Yup.string().required("Email là bắt buộc").email(),
+    // phoneNumber: Yup.string().required("Điện thoại là bắt buộc"),
+    // country: Yup.string().required("Quốc gia là bắt buộc"),
+    
     address: Yup.string().required("Địa điểm là bắt buộc"),
-    company: Yup.string().required("Công ty là bắt buộc"),
-    state: Yup.string().required("Tỉnh là bắt buộc"),
-    city: Yup.string().required("Thành phố là bắt buộc"),
-    sex: Yup.string().required("Giới tính là bắt buộc"),
-    style: Yup.string().required("Phong cách là bắt buộc"),
+    
+    // company: Yup.string().required("Công ty là bắt buộc"),
+   
+    state: Yup.string().required("Thời gian bắt đầu bắt buộc và lớn hơn kết thúc"),
+    
+    city: Yup.string().required("Thời gian kết thúc là bắt buộc"),
+    
+    // sex: Yup.string().required("Giới tính là bắt buộc"),
+    // style: Yup.string().required("Phong cách là bắt buộc"),
     //  role: Yup.string().required('Role Number is required'),
-    avatarUrl: Yup.mixed().required("Avatar là bắt buộc"),
+    //  zipCode: Yup.string().required('ZipCode is required'),
+    
+    avatarUrl: Yup.mixed().required("Hình ảnh là bắt buộc"),
   });
 
   const formik = useFormik({
@@ -138,6 +146,12 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
         await fakeRequest(500);
         resetForm();
         setSubmitting(false);
+        const data = {
+          value : values,
+          style : checkBoxStyle,
+          sex : checkBoxSex
+        }
+        console.log('upppppp ',data)
         enqueueSnackbar(!isEdit ? "Create success" : "Update success", {
           variant: "success",
         });
@@ -339,9 +353,9 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                         <TextField
                           fullWidth
                           {...props}
-                          helperText="thời gian bắt đầu lớn hơn kết thúc"
+                          // helperText="Thời gian bắt đầu bắt buộc và lớn hơn kết thúc"
                           error={Boolean(touched.state && errors.state)}
-                          // helperText={touched.address && errors.state}
+                          helperText={touched.address && errors.state}
                          
                         />
                       )}
@@ -393,9 +407,12 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                     // value={values.zipCode}
                      max={10000}
                     {...getFieldProps("zipCode")}
+                    error={Boolean(touched.zipCode && errors.zipCode)}
+                    helperText={touched.zipCode && errors.zipCode}
                     onChange={(e, newValue) => {
                       setFieldValue("zipCode", newValue);
                     }}
+                    
                     getAriaValueText={valuetext}
                     color="secondary"
                     valueLabelDisplay="auto"
@@ -547,6 +564,7 @@ export default function UserNewForm({ isEdit, currentUser,listUser }) {
                               style={{border:'1px dashed black',width:'20%',margin:0}}
                               control={
                                  <Checkbox
+                                 sx={{ '&.Mui-checked': {color: '#ff93a6',},}}
                                     tabIndex={-1}
                                     checked={value.checked}
                                     value={value.id}

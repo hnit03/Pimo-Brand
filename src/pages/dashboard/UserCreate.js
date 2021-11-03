@@ -49,8 +49,8 @@ export default function UserCreate() {
           heading={!isEdit ? 'Tạo mới chiến dịch' : 'Chỉnh sửa chiến dịch'}
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
-            { name: 'Người mẫu', href: PATH_DASHBOARD.user.root },
-            { name: !isEdit ? 'Tạo mới người mẫu' : name }
+            { name: 'Chiến dịch', href: PATH_DASHBOARD.casting.cards },
+            { name: !isEdit ? 'Tạo mới chiến dịch' : name }
           ]}
         />
 

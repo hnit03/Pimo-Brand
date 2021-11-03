@@ -302,11 +302,11 @@ export function getUsers() {
 }
 // ----------------------------------------------------------------------
 
-export function getCastingApply() {
+export function getCastingApply(pageNo) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/castingApply/manageApply');
+      const response = await axios.get('/api/castingApply/manageApply',{pageNo});
       dispatch(slice.actions.getUsersSuccess(response.data.users));
     } catch (error) {
       dispatch(slice.actions.hasError(error));

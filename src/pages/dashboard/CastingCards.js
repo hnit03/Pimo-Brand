@@ -54,7 +54,7 @@ export default function UserCards() {
                heading="Danh sách chiến dịch"
                links={[
                   { name: 'Trang chủ', href: PATH_DASHBOARD.root },
-                  { name: 'Người mẫu', href: PATH_DASHBOARD.user.root },
+                  { name: 'Chiến dịch', href: PATH_DASHBOARD.casting.cards },
                   { name: 'Danh sách' }
                ]}
                action={

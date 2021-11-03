@@ -31,7 +31,7 @@ export default function UserCards() {
   const { users } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getCastingApply());
+    dispatch(getCastingApply(1));
   }, [dispatch]);
 
   return (

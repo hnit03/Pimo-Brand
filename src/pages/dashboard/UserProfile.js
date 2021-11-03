@@ -154,7 +154,7 @@ export default function UserList() {
                heading="Danh sách người mẫu"
                links={[
                   { name: 'Trang chủ', href: PATH_DASHBOARD.root },
-                  { name: 'Nhãn hàng', href: PATH_DASHBOARD.user.root },
+                  { name: 'Người mẫu', href: PATH_DASHBOARD.user.root },
                   { name: 'Danh sách' }
                ]}
                // action={

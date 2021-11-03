@@ -66,7 +66,8 @@ mock.onGet('/api/user/all').reply(() => {
 });
 // ----------------------------------------------------------------------
 
-mock.onGet('/api/castingApply/manageApply').reply( async () => {
+mock.onGet('/api/castingApply/manageApply').reply( async (pageNo) => {
+   console.log('pageNo ',pageNo.pageNo)
    const accessToken = JSCookies.get('jwt')
    console.log('accessToken ',accessToken)
    let axiosConfig = {
@@ -76,7 +77,7 @@ mock.onGet('/api/castingApply/manageApply').reply( async () => {
          'authorization': 'Bearer ' + accessToken
       }
    };
-   const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=1`,axiosConfig)
+   const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=${pageNo.pageNo}`,axiosConfig)
    console.log('apply ',data.applyList)
    var NAME = []
    data.applyList.map(apply => (
@@ -107,16 +108,25 @@ mock.onGet('/api/castingApply/manageApply').reply( async () => {
    data.applyList.map(apply => (
       IMAGE.push(apply.model.avatar)
    ));
+   var ID = []
+   data.applyList.map(apply => (
+      ID.push(apply.model.id)
+   ));
+   var CASTING_NAME = []
+   data.applyList.map(apply => (
+      CASTING_NAME.push(apply.casting.name)
+   ));
    const users = [...Array(data.applyList.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
-         id: createId(setIndex),
+         id: ID[index],
          avatarUrl: IMAGE[index],
          cover:IMAGE[index],
          name: NAME[index],
          phone : PHONE[index],
          address : COUNTRY[index] + ", "+ PROVINCE[index] + ", "+ DISTRICT[index],
          gift : GIFT[index],
+         castingName: CASTING_NAME[index],
          follower: faker.datatype.number(),
          following: faker.datatype.number(),
          totalPost: faker.datatype.number(),

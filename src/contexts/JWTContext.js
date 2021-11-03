@@ -6,8 +6,7 @@ import { isValidToken, setSession } from '../utils/jwt';
 import Cookies from 'universal-cookie';
 import JSCookies from 'js-cookie';
 import jwt from 'jwt-decode';
-import Login from '../pages/authentication/Login'
- 
+  
 // ----------------------------------------------------------------------
 
 const initialState = {
