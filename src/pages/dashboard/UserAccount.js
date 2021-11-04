@@ -80,7 +80,7 @@ export default function UserAccount() {
           heading="Thông tin"
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
-            { name: 'Người dùng', href: PATH_DASHBOARD.user.root },
+            { name: 'Nhãn hàng', href: PATH_DASHBOARD.user.root },
             { name: 'Chỉnh sửa thông tin' }
           ]}
         />
@@ -90,7 +90,9 @@ export default function UserAccount() {
             value={currentTab}
             scrollButtons="auto"
             variant="scrollable"
-            allowScrollButtonsMobile
+            style={{'& .MuiTabs-indicator': {color: '#ff93a6 !important',}}}
+            sx={{ '&.MuiTabs-indicator': {color: '#ff93a6',},}}
+             allowScrollButtonsMobile
             onChange={handleChangeTab}
           >
             {ACCOUNT_TABS.map((tab) => (

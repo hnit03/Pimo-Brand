@@ -157,6 +157,7 @@ mock.onGet('/api/casting/all').reply(async () => {
    //   const url = `https://api.pimo.studio/api/v1/castings/brand/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
    //   fetch(url)
    //   .then(res=>res.json())
+   console.log('data ',data)
       console.log(data.castings.length);
       var NAME = []
       data.castings.map(casting => (
@@ -207,18 +208,23 @@ mock.onGet('/api/casting/all').reply(async () => {
          SEX.push(casting.listGender)
          // SEX = casting.listGender
       ));
-      // console.log('STYLE ',SEX)
+      var REQUEST =[];
+      data.castings.map((casting,index) => (
+         REQUEST.push(casting.casting.request)
+         // SEX = casting.listGender
+      ));
+      console.log('REQUEST ',REQUEST)
       // console.log('STYLE ',data.castings)
       const users = [...Array(data.castings.length)].map((_, index) => {
           const setIndex = index + 1;
          return {
-            id: createId(setIndex),
+            id: ID[index],
             avatarUrl: IMAGE[index],
             name: NAME[index],
             email:  faker.random.number(),
             phoneNumber: STYLE[index],
             address: ADDRESS[index],
-            country: 'Vietnam',
+            country: REQUEST[index],
              state: OPEN_TIME[index],
             city: CLOSE_TIME[index],
              zipCode: SALARY[index],

@@ -55,6 +55,7 @@ import { AuthProvider } from './contexts/JWTContext';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 // ----------------------------------------------------------------------
 
@@ -67,6 +68,10 @@ ReactDOM.render(
             <CollapseDrawerProvider>
               <BrowserRouter>
                 <AuthProvider>
+                <MessengerCustomerChat
+         pageId="108999594921598"
+         appId="377383184072138"
+      />
                   <App />
                 </AuthProvider>
               </BrowserRouter>

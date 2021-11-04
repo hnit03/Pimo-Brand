@@ -168,7 +168,7 @@ export default function AccountGeneral() {
               </Stack>
 
               <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+                <LoadingButton style={{backgroundColor: '#ff93a6'}} type="submit" variant="contained" loading={isSubmitting}>
                 Lưu thay đổi
                 </LoadingButton>
               </Box>
