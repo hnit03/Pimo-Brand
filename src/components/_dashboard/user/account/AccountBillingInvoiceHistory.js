@@ -56,13 +56,13 @@ export default function AccountBillingInvoiceHistory({ invoices }) {
                (history.length > 0) ?
                   (history.map((item, index) => (
                      <Stack key={item.id} direction="row" justifyContent="space-between" sx={{ width: 1 }}>
-                        <Typography variant="body2" sx={{ minWidth: 120 }}>
+                        <Typography variant="body2" sx={{ minWidth: 110 }}>
                            {(item.dateCreate.toDate()).toLocaleDateString('vi-vn', { year: 'numeric', month: 'long', day: 'numeric' })}
                         </Typography>
-                        <Typography variant="body2" sx={{ minWidth: 180 }} style={{ wordWrap: 'break-word' }}>
+                        <Typography variant="body2" sx={{ minWidth: 150 }} style={{ wordWrap: 'break-word' }}>
                            {item.nameCasting}
                         </Typography>
-                        <Typography variant="body2" sx={{ minWidth: 130 }} style={{textAlign: 'right'}}>{item.value} VND</Typography>
+                        <Typography variant="body2" sx={{ minWidth: 110 }} style={{textAlign: 'right'}}>{item.value} VND</Typography>
                      </Stack>
                   ))) : null
             }

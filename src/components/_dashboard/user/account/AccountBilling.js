@@ -56,7 +56,7 @@ export default function AccountBilling() {
 
   return (
     <Grid container spacing={5}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={7}>
         <Stack spacing={3}>
           {/* <Card sx={{ p: 3 }}>
             <Typography variant="overline" sx={{ mb: 3, display: 'block', color: 'text.secondary' }}>
