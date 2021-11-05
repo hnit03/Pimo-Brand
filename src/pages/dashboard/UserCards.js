@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React,{ useEffect } from 'react';
 // material
 import { Container, Grid, Skeleton } from '@material-ui/core';
 // redux
@@ -12,7 +12,8 @@ import useSettings from '../../hooks/useSettings';
 import Page from '../../components/Page';
 import { UserCard } from '../../components/_dashboard/user/cards';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 // ----------------------------------------------------------------------
 
 const SkeletonLoad = (
@@ -29,11 +30,16 @@ export default function UserCards() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
-
+  var [pageNo, setPageNo] = React.useState(1);
+  console.log('users2222 ',users)
   useEffect(() => {
-    dispatch(getCastingApply(1));
-  }, [dispatch]);
-
+    dispatch(getCastingApply(pageNo));
+  }, [pageNo]);
+  const handleChangePage = (event, value) => {
+    setPageNo(value);
+    // window.scrollTo(0, 0);
+    // changeURL(value);
+ };
   return (
     <Page title="User: Cards | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'lg'}>
@@ -55,6 +61,15 @@ export default function UserCards() {
           {!users.length && SkeletonLoad}
         </Grid>
       </Container>
+      <Stack spacing={2} style={{ alignItems: "center", marginBottom: "5%",marginTop:'5rem' }}>
+      <Pagination
+         onChange={handleChangePage}
+         defaultPage={parseInt(pageNo)}
+         count={ users.length > 0 ? users[0].follower:1 }
+         showFirstButton
+         showLastButton
+      />
+   </Stack>
     </Page>
   );
 }

@@ -219,9 +219,9 @@ var [checkBoxSkin, setCheckBoxSkin] = React.useState([
         })
         values.country += "Chiều cao: "+ valueHeight[0] + "-" + valueHeight[1]+"cm" + "<br/>"
         + "Tuổi: "+ valueAge[0] + "-" + valueAge[1] + "<br/>"
-        + "Vòng 1: "+ valueMeasure1[0] + "-" + valueMeasure1[1] + "<br/>"
-        + "Vòng 2: "+ valueMeasure2[0] + "-" + valueMeasure2[1] + "<br/>"
-        + "Vòng 3: "+ valueMeasure3[0] + "-" + valueMeasure3[1] + "<br/>"
+        + "Vòng 1: "+ valueMeasure1[0] + "-" + valueMeasure1[1]+"(cm)"+  "<br/>"
+        + "Vòng 2: "+ valueMeasure2[0] + "-" + valueMeasure2[1]+"(cm)"+  "<br/>"
+        + "Vòng 3: "+ valueMeasure3[0] + "-" + valueMeasure3[1]+"(cm)"+  "<br/>"
         + "Màu Tóc: "+  HAIR_NAME + "  -  "
         + "Màu Da: "+  SKIN_NAME
         console.log('values ',values.country)

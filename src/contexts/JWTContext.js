@@ -94,7 +94,8 @@ function AuthProvider({ children }) {
                   isPublic:true,
                   phoneNumber: data.brand.phone,
                   photoURL: data.brand.logo,
-                  role:'Nhãn hàng'
+                  role:'Nhãn hàng',
+                  brandCateId: data.brand.brandCateId
                   // about: 'data.brand.description',
                   //  address: 'data.brand.address',
                   // displayName: 'data.brand.name',
@@ -172,7 +173,8 @@ function AuthProvider({ children }) {
             isPublic:true,
             phoneNumber: data.brand.phone,
             photoURL: data.brand.logo,
-            role:'Nhãn hàng'
+            role:'Nhãn hàng',
+            brandCateId: data.brand.brandCateId
          }
          console.log(user);
          dispatch({
@@ -218,7 +220,38 @@ function AuthProvider({ children }) {
 
    const resetPassword = () => { };
 
-   const updateProfile = () => { };
+   const updateProfile = () => {
+      const accessToken = JSCookies.get('jwt')
+          const url = `https://api.pimo.studio/api/v1/brands/profile/${jwt(accessToken)[Object.keys(jwt(accessToken))[4]]}`
+         //  const {data} = await axios.get(`${url}`);
+       fetch(url)
+      .then(res=>res.json())
+      .then(data=>
+        {
+           console.log(data.brand.brand , " lala");
+         //   const user = JSON.parse(JSCookies.get('user'));
+         const user = {
+            about: data.brand.description,
+            address: data.brand.address,
+            displayName: data.brand.name,
+            email: data.brand.mail,
+            id: data.brand.id,
+            isPublic:true,
+            phoneNumber: data.brand.phone,
+            photoURL: data.brand.logo,
+            role:'Nhãn hàng',
+            brandCateId: data.brand.brandCateId
+         }
+         console.log(user);
+         dispatch({
+            type: 'LOGIN',
+            payload: {
+               user
+            }
+         });
+        }
+         )
+      }  
 
    return (
       <AuthContext.Provider

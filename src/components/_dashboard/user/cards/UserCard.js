@@ -24,6 +24,7 @@ import SvgIconStyle from "../../../SvgIconStyle";
 import LocationOn from "@material-ui/icons/LocationOn";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+
 // ----------------------------------------------------------------------
 
 const SOCIALS = [
@@ -114,6 +115,7 @@ export default function UserCard({ user, ...other }) {
     castingName,
   } = user;
   return (
+    <>
     <Card {...other}>
       <a
         style={{ textDecoration: "none", color: "black" }}
@@ -382,5 +384,7 @@ export default function UserCard({ user, ...other }) {
         {InfoItem(totalPost)} */}
       {/* </Grid> */}
     </Card>
+     
+    </>
   );
 }

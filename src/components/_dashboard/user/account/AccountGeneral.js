@@ -23,7 +23,8 @@ import { UploadAvatar } from '../../../upload';
 import { fData } from '../../../../utils/formatNumber';
 //
 import countries from '../countries';
-
+import JSCookies from 'js-cookie';
+import axios from 'axios';
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
@@ -31,8 +32,10 @@ export default function AccountGeneral() {
   const { enqueueSnackbar } = useSnackbar();
   const { user, updateProfile } = useAuth();
   console.log('hihihi ',user)
-  const UpdateUserSchema = Yup.object().shape({
-    displayName: Yup.string().required('Name is required')
+   const UpdateUserSchema = Yup.object().shape({
+    displayName: Yup.string().required('Name is required'),
+    address: Yup.string().required('địa chỉ is required'),
+    phoneNumber: Yup.string().required('điện thoại is required')
   });
 
   const formik = useFormik({
@@ -48,17 +51,70 @@ export default function AccountGeneral() {
       city: user.city,
       zipCode: user.zipCode,
       about: user.about,
-      isPublic: user.isPublic
+      isPublic: user.isPublic,
+      brandCateId: user.brandCateId
     },
 
     validationSchema: UpdateUserSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
+      const accessToken = JSCookies.get('jwt')
       try {
-        await updateProfile({ ...values });
-        enqueueSnackbar('Update success', { variant: 'success' });
+        var result = false;
+        var formData = new FormData();
+        formData.append('name', values.displayName)
+        formData.append('description', values.about)
+        formData.append('brandCateId', values.brandCateId)
+        formData.append('address', values.address)
+        formData.append('phone', values.phoneNumber)
+        formData.append('imageLogo', values.photoURL.file)
+        
+        console.log('formData ',formData.get('name'))
+        console.log('formData ',formData.get('description'))
+        console.log('formData ',formData.get('brandCateId'))
+        console.log('formData ',formData.get('address'))
+        console.log('formData ',formData.get('phone'))
+        console.log('formData ',formData.get('imageLogo'))
+        let axiosConfig = {
+          headers: {
+            "Content-Type": "multipart/form-data; boundary=AaB03x" +
+               "--AaB03x" +
+               "Content-Disposition: file" +
+               "Content-Type: png" +
+               "Content-Transfer-Encoding: binary" +
+               "...data... " +
+               "--AaB03x--",
+            "Accept": "application/json",
+            "type": "formData",
+            "authorization": "Bearer " + accessToken     
+         }
+      };
+       
+
+       try {
+        const { data } = await axios.put('https://api.pimo.studio/api/v1/brands', formData, axiosConfig);
+        console.log('hihihi ' ,data)
+        if(data.success) {
+          result = true;
+       }else{
+         result = false;
+       }
+        } catch (error) {
+           result = false;
+       }
+            
+        if(result){
+          await updateProfile();
+          enqueueSnackbar('Update success', { variant: 'success' });
         if (isMountedRef.current) {
           setSubmitting(false);
         }
+          }else{
+          enqueueSnackbar('Update failed', { variant: 'error' });
+        if (isMountedRef.current) {
+          setSubmitting(false);
+        }
+         }
+
       } catch (error) {
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code });
@@ -76,7 +132,8 @@ export default function AccountGeneral() {
       if (file) {
         setFieldValue('photoURL', {
           ...file,
-          preview: URL.createObjectURL(file)
+          preview: URL.createObjectURL(file),
+          file:file
         });
       }
     },
@@ -129,13 +186,22 @@ export default function AccountGeneral() {
             <Card sx={{ p: 3 }}>
               <Stack spacing={{ xs: 2, md: 3 }}>
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth label="Tên" {...getFieldProps('displayName')} />
+                  <TextField fullWidth label="Tên"
+                   error={Boolean(touched.displayName && errors.displayName)}
+                   helperText={touched.displayName && errors.displayName}
+                   {...getFieldProps('displayName')} />
                   <TextField fullWidth disabled label="Email" {...getFieldProps('email')} />
                 </Stack>
 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <TextField fullWidth label="Số điện thoại" {...getFieldProps('phoneNumber')} />
-                  <TextField fullWidth label="Địa chỉ" {...getFieldProps('address')} />
+                  <TextField fullWidth 
+                   error={Boolean(touched.phoneNumber && errors.phoneNumber)}
+                   helperText={touched.phoneNumber && errors.phoneNumber}
+                  label="Số điện thoại" {...getFieldProps('phoneNumber')} />
+                  <TextField fullWidth 
+                   error={Boolean(touched.address && errors.address)}
+                   helperText={touched.address && errors.address}
+                  label="Địa chỉ" {...getFieldProps('address')} />
                 </Stack>
 
                 {/* <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>

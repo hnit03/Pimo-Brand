@@ -78,7 +78,7 @@ mock.onGet('/api/castingApply/manageApply').reply( async (pageNo) => {
       }
    };
    const { data } = await axios.get(`https://api.pimo.studio/api/v1/applies?pageNo=${pageNo.pageNo}`,axiosConfig)
-   console.log('apply ',data.applyList)
+   console.log('apply ',data)
    var NAME = []
    data.applyList.map(apply => (
        NAME.push(apply.model.name)
@@ -116,18 +116,20 @@ mock.onGet('/api/castingApply/manageApply').reply( async (pageNo) => {
    data.applyList.map(apply => (
       CASTING_NAME.push(apply.casting.name)
    ));
+   var TOTAL_PAGE;
+   TOTAL_PAGE = data.totalPage;
    const users = [...Array(data.applyList.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
          id: ID[index],
-         avatarUrl: IMAGE[index],
-         cover:IMAGE[index],
+         avatarUrl: IMAGE[index] === null ? mockImgAvatar(setIndex) : IMAGE[index],
+         cover:IMAGE[index] === null ? mockImgAvatar(setIndex) : IMAGE[index],
          name: NAME[index],
          phone : PHONE[index],
          address : COUNTRY[index] + ", "+ PROVINCE[index] + ", "+ DISTRICT[index],
          gift : GIFT[index],
          castingName: CASTING_NAME[index],
-         follower: faker.datatype.number(),
+         follower: TOTAL_PAGE,
          following: faker.datatype.number(),
          totalPost: faker.datatype.number(),
          position: sample([

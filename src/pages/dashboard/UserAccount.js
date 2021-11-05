@@ -90,8 +90,11 @@ export default function UserAccount() {
             value={currentTab}
             scrollButtons="auto"
             variant="scrollable"
-            style={{'& .MuiTabs-indicator': {color: '#ff93a6 !important',}}}
-            sx={{ '&.MuiTabs-indicator': {color: '#ff93a6',},}}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "#ff93a6"
+               }
+              }}
              allowScrollButtonsMobile
             onChange={handleChangeTab}
           >
