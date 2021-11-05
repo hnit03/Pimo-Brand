@@ -21,10 +21,10 @@ export default function AccountBilling() {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewCardSchema = Yup.object().shape({
-    cardName: Yup.string().required('Name is required'),
-    cardNumber: Yup.string().required('Card number is required'),
-    cardExpired: Yup.string().required('Card expired is required'),
-    cardCvv: Yup.string().required('Cvv is required')
+    cardName: Yup.string().required('Tên là bắt buộc'),
+    cardNumber: Yup.string().required('Mã thẻ là bắt buộc'),
+    cardExpired: Yup.string().required('Ngày hết hạn là bắt buộc'),
+    cardCvv: Yup.string().required('CVV là bắt buộc')
   });
 
   const formik = useFormik({
