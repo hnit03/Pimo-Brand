@@ -108,9 +108,13 @@ mock.onGet('/api/castingApply/manageApply').reply( async (pageNo) => {
    data.applyList.map(apply => (
       IMAGE.push(apply.model.avatar)
    ));
-   var ID = []
+   var ID_MODEL = []
    data.applyList.map(apply => (
-      ID.push(apply.model.id)
+      ID_MODEL.push(apply.model.id)
+   ));
+   var ID_CASTING = []
+   data.applyList.map(apply => (
+      ID_CASTING.push(apply.casting.id)
    ));
    var CASTING_NAME = []
    data.applyList.map(apply => (
@@ -121,7 +125,8 @@ mock.onGet('/api/castingApply/manageApply').reply( async (pageNo) => {
    const users = [...Array(data.applyList.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
-         id: ID[index],
+         id_model: ID_MODEL[index],
+         id_casting : ID_CASTING[index],
          avatarUrl: IMAGE[index] === null ? mockImgAvatar(setIndex) : IMAGE[index],
          cover:IMAGE[index] === null ? mockImgAvatar(setIndex) : IMAGE[index],
          name: NAME[index],
@@ -322,45 +327,69 @@ mock.onGet('/api/user/manage-users').reply(async () => {
 
 // ----------------------------------------------------------------------
 
-mock.onGet('/api/user/manage-brands').reply(async () => {
-   const { data } = await axios.get(`https://api.pimo.studio/api/v1/brands`)
-   var NAME = []
-   data.brandList.map(brand => (
-      NAME.push(brand.brand.name)
+mock.onGet('/api/user/manage-apply-list').reply(async () => {
+   const accessToken = JSCookies.get('jwt')
+   let axiosConfig = {
+      headers: {
+         'authorization': 'Bearer ' + accessToken
+      }
+   };
+   const { data } = await axios.get(`https://api.pimo.studio/api/v1/browses`,axiosConfig)
+   console.log('dataaaa ',data)
+   var NAME=[];
+   data.castingBrowses.map((model) => (
+      NAME.push(model.model.name)
    ));
    var IMAGE = []
-   data.brandList.map(brand => (
-      IMAGE.push(brand.brand.logo)
+   data.castingBrowses.map(model => (
+      IMAGE.push(model.model.avatar)
    ));
-   var ID = []
-   data.brandList.map(brand => (
-      ID.push(brand.brand.id)
-   ));
+   // var ID = []
+   // data.castingBrowses.map(model => (
+   //    ID.push(model.model.id)
+   // ));
+   // console.log('ID ',ID)
    var EMAIL = []
-   data.brandList.map(brand => (
-      EMAIL.push(brand.brand.mail)
+   data.castingBrowses.map(model => (
+      EMAIL.push(model.model.mail)
    ));
    var PHONE_NUMBER = []
-   data.brandList.map(brand => (
-      PHONE_NUMBER.push(brand.brand.phone)
+   data.castingBrowses.map(model => (
+      PHONE_NUMBER.push(model.model.phone)
    ));
-   var ADDRESS = []
-   data.brandList.map(brand => (
-      ADDRESS.push(brand.brand.address)
+   var COUNTRY = []
+   data.castingBrowses.map(model => (
+      COUNTRY.push(model.model.country)
    ));
-   var STATUS = []
-   data.brandList.map(brand => (
-      STATUS.push(brand.brand.status)
+   var DISTRICT = []
+   data.castingBrowses.map(model => (
+      DISTRICT.push(model.model.district)
    ));
-   var GIFTED = []
-   data.brandList.map(brand => (
-      GIFTED.push(brand.name)
+   var PROVINCE = []
+   data.castingBrowses.map(model => (
+      PROVINCE.push(model.model.province)
    ));
    var DESCRIPTION = []
-   data.brandList.map(brand => (
-      DESCRIPTION.push(brand.brand.description)
+   data.castingBrowses.map(model => (
+      DESCRIPTION.push(model.model.description)
    ));
-   const users = [...Array(20)].map((_, index) => {
+   var STATUS = []
+   data.castingBrowses.map(model => (
+      STATUS.push(model.model.status)
+   ));
+    var GIFTED = []
+   data.castingBrowses.map(model => (
+      GIFTED.push(model.model.gifted)
+   ));
+   var BIRTH = []
+   data.castingBrowses.map(model => (
+      BIRTH.push(model.model.dateOfBirth)
+   ));
+   var CASTING_NAME = []
+   data.castingBrowses.map(casting => (
+      CASTING_NAME.push(casting.casting.name)
+   ));
+   const users = [...Array(data.castingBrowses.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
          id: createId(setIndex),
@@ -368,15 +397,15 @@ mock.onGet('/api/user/manage-brands').reply(async () => {
          name: NAME[index],
          email: EMAIL[index],
          phoneNumber: PHONE_NUMBER[index],
-         address: ADDRESS[index],
+         address: COUNTRY[index] + " " + DISTRICT[index] + " " + PROVINCE[index],
          state: faker.address.state(),
-         country: 'Vietnam',
+         country: CASTING_NAME[index],
           city: DESCRIPTION[index],
-         zipCode: faker.address.zipCodeByState(),
+         zipCode: BIRTH[index],
          company: GIFTED[index],
          isVerified: true,
          status: STATUS[index] ? ('active') : ('banned'),
-         role: ADDRESS[index],
+         role: COUNTRY[index] + " " + DISTRICT[index] + " " + PROVINCE[index],
       }
    })
    return [200, { users }];

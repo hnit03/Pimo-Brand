@@ -40,7 +40,7 @@ export default function UserCards() {
   }, [dispatch]);
 
   return (
-    <Page title="User: Cards | Minimal-UI">
+    <Page title="Chiến dịch">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         {/* <HeaderBreadcrumbs
           heading="User Cards"

@@ -28,6 +28,9 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import Label from '../../Label';
 import { UploadAvatar } from '../../upload';
 import countries from './countries';
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DateTimePicker from "@mui/lab/DateTimePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +39,7 @@ BrandNewForm.propTypes = {
    currentUser: PropTypes.object
 };
 
+ 
 export default function BrandNewForm({ isEdit, currentUser }) {
    const navigate = useNavigate();
    const { enqueueSnackbar } = useSnackbar();
@@ -180,6 +184,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                      )}
 
                   </Card>
+                  
                </Grid>
 
                <Grid item xs={12} md={8}>
@@ -188,10 +193,11 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
                            <TextField
                               fullWidth
-                              label="Tên nhãn hàng"
+                              label="Tên người mẫu"
                               {...getFieldProps('name')}
                               error={Boolean(touched.name && errors.name)}
                               helperText={touched.name && errors.name}
+                             
                            />
                            <TextField
                               fullWidth
@@ -210,7 +216,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                               helperText={touched.phoneNumber && errors.phoneNumber}
                            />
-                           <TextField
+                           {/* <TextField
                               select
                               fullWidth
                               label="Quốc gia"
@@ -226,11 +232,37 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                                     {option.label}
                                  </option>
                               ))}
-                           </TextField>
+                           </TextField> */}
+                            {/* <TextField
+                              fullWidth
+                              label="ngày sinh"
+                              {...getFieldProps('zipCode')}
+                              error={Boolean(touched.role && errors.role)}
+                              helperText={touched.role && errors.role}
+                           /> */}
+
+                     <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                      renderInput={(props) => (
+                        <TextField
+                          fullWidth
+                          {...props}
+                           error={Boolean(touched.zipCode && errors.zipCode)}
+                          helperText={touched.zipCode && errors.zipCode}
+                        />
+                      )}
+                      
+                      label="Ngày sinh"
+                      {...getFieldProps("zipCode")}
+                       onChange={(newValue) => {
+                        setFieldValue("zipCode", newValue);
+                      }}
+                    />
+                  </LocalizationProvider>
                         </Stack>
 
                         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}>
-                           {(listCategory !== undefined && listCategory !== null) ? (
+                           {/* {(listCategory !== undefined && listCategory !== null) ? (
                               <TextField
                                  select
                                  fullWidth
@@ -251,14 +283,8 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                                     ))
                                  }
                               </TextField>
-                           ) : null}
-                           <TextField
-                              fullWidth
-                              label="Địa chỉ"
-                              {...getFieldProps('role')}
-                              error={Boolean(touched.role && errors.role)}
-                              helperText={touched.role && errors.role}
-                           />
+                           ) : null} */}
+                          
                         </Stack>
 
                         <TextField {...getFieldProps('city')} fullWidth multiline minRows={4} maxRows={4} label="Mô tả" />

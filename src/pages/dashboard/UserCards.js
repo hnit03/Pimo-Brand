@@ -46,9 +46,9 @@ export default function UserCards() {
         <HeaderBreadcrumbs
           heading="Người mẫu Apply"
           links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'User', href: PATH_DASHBOARD.user.root },
-            { name: 'Cards' }
+            { name: 'Trang chủ', href: PATH_DASHBOARD.root },
+            { name: 'Người mẫu', href: PATH_DASHBOARD.user.cards },
+            { name: 'Thẻ' }
           ]}
         />
         <Grid container spacing={3}>

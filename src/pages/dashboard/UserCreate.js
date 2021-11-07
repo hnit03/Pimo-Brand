@@ -50,7 +50,7 @@ export default function UserCreate() {
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
             { name: 'Chiến dịch', href: PATH_DASHBOARD.casting.cards },
-            { name: !isEdit ? 'Tạo mới chiến dịch' : name }
+            { name: !isEdit ? 'Tạo mới chiến dịch' : 'Chi tiết' }
           ]}
         />
 

@@ -219,11 +219,11 @@ export function getUserList() {
 
 // ----------------------------------------------------------------------
 
-export function getBrandList() {
+export function getApplyList() {
    return async (dispatch) => {
      dispatch(slice.actions.startLoading());
      try {
-       const response = await axios.get('/api/user/manage-brands');
+       const response = await axios.get('/api/user/manage-apply-list');
        dispatch(slice.actions.getUserListSuccess(response.data.users));
      } catch (error) {
        dispatch(slice.actions.hasError(error));

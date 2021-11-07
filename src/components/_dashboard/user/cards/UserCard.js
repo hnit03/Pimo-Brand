@@ -24,6 +24,10 @@ import SvgIconStyle from "../../../SvgIconStyle";
 import LocationOn from "@material-ui/icons/LocationOn";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import JSCookies from 'js-cookie';
+import axios from 'axios';
+import { getUsers,getCastingApply } from '../../../../redux/slices/user';
+import { useDispatch, useSelector } from '../../../../redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -100,6 +104,7 @@ UserCard.propTypes = {
 };
 
 export default function UserCard({ user, ...other }) {
+  const dispatch = useDispatch();
   const {
     name,
     cover,
@@ -111,15 +116,91 @@ export default function UserCard({ user, ...other }) {
     phone,
     address,
     gift,
-    id,
+    id_model,
+    id_casting,
     castingName,
   } = user;
+
+  const handleApply = async (user) => {
+    console.log('eee ',id_model)
+    console.log('eee ',id_casting)
+    const accessToken = JSCookies.get('jwt')
+    var resultCastingBrowser = false;
+    // var resultCastingApply = false;
+    let axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+         "Access-Control-Allow-Origin": "*",
+         'authorization': 'Bearer ' + accessToken
+      }
+   };
+    // var formData = new FormData();
+    // formData.append('modelId', id_model)
+    // formData.append('castingId', id_casting)
+    var postData = {
+      modelId : id_model,
+      castingId : id_casting,
+    }
+    try {
+      const { data } = await axios.post('https://api.pimo.studio/api/v1/browses', postData, axiosConfig);
+       if(data.success) {
+        resultCastingBrowser = true;
+     }else{
+      resultCastingBrowser = false;
+     }
+      } catch (error) {
+        resultCastingBrowser = false;
+     }
+
+     if(resultCastingBrowser){
+      let axiosConfig = {
+        headers: {
+           'Content-Type': 'application/json;charset=UTF-8',
+           "Access-Control-Allow-Origin": "*",
+           'authorization': 'Bearer ' + accessToken
+        }
+     };
+      try {
+        const { data } = await axios.put('https://api.pimo.studio/api/v1/applies', postData, axiosConfig);
+         if(data.success) {
+           dispatch(getCastingApply(1));
+        }else{
+         }
+        } catch (error) {
+         }
+     }
+  }
+  const handleCancelApply = async (e) =>{
+    const accessToken = JSCookies.get('jwt')
+   
+    var postData = {
+      modelId : id_model,
+      castingId : id_casting,
+    }
+
+      let axiosConfig = {
+        headers: {
+           'Content-Type': 'application/json;charset=UTF-8',
+           "Access-Control-Allow-Origin": "*",
+           'authorization': 'Bearer ' + accessToken
+        }
+     };
+      try {
+        const { data } = await axios.put('https://api.pimo.studio/api/v1/applies', postData, axiosConfig);
+         if(data.success) {
+            dispatch(getCastingApply(1));
+        }else{
+          }
+        } catch (error) {
+          }
+  }
+
   return (
     <>
     <Card {...other}>
       <a
         style={{ textDecoration: "none", color: "black" }}
-        href={`https://pimo.studio/model-info/${id}`}
+        href={`https://pimo.studio/model-info/${id_model}`}
         target="_blank"
       >
         <CardMediaStyle>
@@ -366,6 +447,7 @@ export default function UserCard({ user, ...other }) {
           //  to={PATH_DASHBOARD.user.newUser}
           //  startIcon={<Icon icon={plusFill} />}
           style={{ backgroundColor: "#FF3030" }}
+          onClick={(e) => handleCancelApply(e)}
         >
           Từ chối
         </Button>
@@ -375,6 +457,7 @@ export default function UserCard({ user, ...other }) {
           //  to={PATH_DASHBOARD.user.newUser}
           //  startIcon={<Icon icon={plusFill} />}
           style={{ backgroundColor: "#00AB55" }}
+          onClick={(e) => handleApply(e)}
         >
           Chấp nhận
         </Button>

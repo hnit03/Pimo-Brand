@@ -138,8 +138,18 @@ export default function CastingCard({ user, ...other }) {
   // console.log("status ", status);
   var open_time = formatDate(new Date(state));
   var close_time = formatDate(new Date(city));
+
   // console.log('user ',user)
+  var statusCasting ='';
+  if(new Date().getDate() < new Date(city).getDate() && status === 'active'){
+    statusCasting = 'Đang diễn ra'
+  }else if(new Date().getDate() > new Date(city).getDate() && status === 'banned'){
+    statusCasting ='Đã kết thúc';
+  }else if(new Date().getDate() < new Date(city).getDate() && status === 'banned'){
+    statusCasting ='Đang chờ duyệt';
+  }
   const dispatch = useDispatch();
+
   const handleDeleteUser = (userId) => {
     dispatch(deleteUser(userId));
   };
@@ -274,6 +284,8 @@ export default function CastingCard({ user, ...other }) {
           paddingTop: "1.5rem",
         }}
       >
+        
+        {statusCasting === 'Đang diễn ra' && 
         <Button
         disabled={true}
           variant="contained"
@@ -282,15 +294,57 @@ export default function CastingCard({ user, ...other }) {
           //  startIcon={<Icon icon={plusFill} />}
           style={{
             backgroundColor:
-              status === "active" ? "rgb(255, 147, 166)" : "grey",
+              'rgb(255, 147, 166)',
               color:'#fff',
               displayPosition: 'flex',
               float:'left',
               marginLeft:'1rem'
            }}
         >
-          {status === "active" ? "Đang diễn ra" : "Đã kết thúc"}
+          {/* {      status === "active" ? "Đang diễn ra" : "Đã kết thúc"    } */}
+        {statusCasting}
         </Button>
+        }
+         {statusCasting === 'Đang chờ duyệt' && 
+        <Button
+        disabled={true}
+          variant="contained"
+          //  component={RouterLink}
+          //  to={PATH_DASHBOARD.user.newUser}
+          //  startIcon={<Icon icon={plusFill} />}
+          style={{
+            backgroundColor:
+              'rgb(245, 124, 0)',
+              color:'#fff',
+              displayPosition: 'flex',
+              float:'left',
+              marginLeft:'1rem'
+           }}
+        >
+          {/* {      status === "active" ? "Đang diễn ra" : "Đã kết thúc"    } */}
+        {statusCasting}
+        </Button>
+        }
+         {statusCasting === 'Đã kết thúc' && 
+        <Button
+        disabled={true}
+          variant="contained"
+          //  component={RouterLink}
+          //  to={PATH_DASHBOARD.user.newUser}
+          //  startIcon={<Icon icon={plusFill} />}
+          style={{
+            backgroundColor:
+              'grey',
+              color:'#fff',
+              displayPosition: 'flex',
+              float:'left',
+              marginLeft:'1rem'
+           }}
+        >
+          {/* {      status === "active" ? "Đang diễn ra" : "Đã kết thúc"    } */}
+        {statusCasting}
+        </Button>
+        }
       </div>
       {/* <Grid container sx={{ py: 3, textAlign: 'center' }}>
         {InfoItem(follower)}

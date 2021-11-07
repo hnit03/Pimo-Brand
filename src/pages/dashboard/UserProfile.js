@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getUserList, deleteUser, getBrandList } from '../../redux/slices/user';
+import { deleteUser, getApplyList } from '../../redux/slices/user';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -40,10 +40,10 @@ import { UserListHead, UserListToolbar, BrandMoreMenu } from '../../components/_
 
 const TABLE_HEAD = [
    { id: 'name', label: 'Tên', alignRight: false },
-   { id: 'company', label: 'Lĩnh vực', alignRight: false },
+   { id: 'company', label: 'Tài năng', alignRight: false },
    { id: 'role', label: 'Địa chỉ', alignRight: false },
    { id: 'isVerified', label: 'Xác thực', alignRight: false },
-   { id: 'status', label: 'Hoạt động', alignRight: false },
+   { id: 'status', label: 'chiến dịch tham gia', alignRight: false },
    { id: '' }
 ];
 
@@ -83,6 +83,7 @@ export default function UserList() {
    const theme = useTheme();
    const dispatch = useDispatch();
    const { userList } = useSelector((state) => state.user);
+   console.log('userLISSSSS ' ,userList)
    const [page, setPage] = useState(0);
    const [order, setOrder] = useState('desc');
    const [selected, setSelected] = useState([]);
@@ -91,7 +92,7 @@ export default function UserList() {
    const [rowsPerPage, setRowsPerPage] = useState(5);
 
    useEffect(() => {
-      dispatch(getBrandList());
+      dispatch(getApplyList());
    }, [dispatch]);
 
    const handleRequestSort = (event, property) => {
@@ -186,7 +187,7 @@ export default function UserList() {
                         />
                         <TableBody>
                            {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                              const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                              const { id, name, role, status, company, avatarUrl, isVerified,country } = row;
                               const isItemSelected = selected.indexOf(name) !== -1;
                               return (
                                  <TableRow
@@ -197,9 +198,9 @@ export default function UserList() {
                                     selected={isItemSelected}
                                     aria-checked={isItemSelected}
                                  >
-                                    <TableCell padding="checkbox">
+                                    {/* <TableCell padding="checkbox">
                                        <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell component="th" scope="row" padding="none">
                                        <Stack direction="row" alignItems="center" spacing={2}>
                                           <Avatar alt={name} src={avatarUrl} />
@@ -212,12 +213,13 @@ export default function UserList() {
                                     <TableCell align="left">{role}</TableCell>
                                     <TableCell align="left">{isVerified ? 'Đã xác thực' : 'Chưa xác thực'}</TableCell>
                                     <TableCell align="left">
-                                       <Label
+                                       {/* <Label
                                           variant={theme.palette.mode === 'light' ? 'ghost' : 'filled'}
                                           color={(status === 'banned' && 'error') || 'success'}
                                        >
                                           {((status === 'banned') ? 'Ngừng hoạt động' : 'Hoạt động')}
-                                       </Label>
+                                       </Label> */}
+                                       {country}
                                     </TableCell>
 
                                     <TableCell align="right">

@@ -38,12 +38,12 @@ export default function BrandMoreMenu({ onDelete, userName }) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={onDelete} sx={{ color: 'text.secondary' }}>
+        {/* <MenuItem onClick={onDelete} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Icon icon={trash2Outline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Xóa" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem
           component={RouterLink}
@@ -53,7 +53,7 @@ export default function BrandMoreMenu({ onDelete, userName }) {
           <ListItemIcon>
             <Icon icon={editFill} width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary="Chỉnh sửa" primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary="Xem thông tin" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
     </>

@@ -5,7 +5,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 // redux
 import { useDispatch, useSelector } from '../../redux/store';
-import { getBrandList } from '../../redux/slices/user';
+import { getApplyList } from '../../redux/slices/user';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
@@ -27,17 +27,17 @@ export default function BrandCreate() {
   const currentUser = userList.find((user) => paramCase(user.name) === name);
 
   useEffect(() => {
-    dispatch(getBrandList());
+    dispatch(getApplyList());
   }, [dispatch]);
 
   return (
     <Page title="User: Create a new user | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={!isEdit ? 'Tạo mới nhãn hàng' : 'Chỉnh sửa thông tin'}
+          heading={!isEdit ? 'Tạo mới nhãn hàng' : 'Thông tin'}
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
-            { name: 'Nhãn hàng', href: PATH_DASHBOARD.brand.root },
+            { name: 'Người mẫu', href: PATH_DASHBOARD.user.profile },
             { name: !isEdit ? 'Tạo mới nhãn hàng' : name }
           ]}
         />

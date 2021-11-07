@@ -58,6 +58,14 @@ export default function AccountGeneral() {
     validationSchema: UpdateUserSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       const accessToken = JSCookies.get('jwt')
+      var avatar;
+      if(values.photoURL.file === undefined){
+        console.log("values.photoURL ",values.photoURL)
+        avatar = values.photoURL
+      }else{
+        console.log('values.photoURLFile ',values.photoURL.file)
+        avatar = values.photoURL.file
+      }
       try {
         var result = false;
         var formData = new FormData();
@@ -66,7 +74,9 @@ export default function AccountGeneral() {
         formData.append('brandCateId', values.brandCateId)
         formData.append('address', values.address)
         formData.append('phone', values.phoneNumber)
-        formData.append('imageLogo', values.photoURL.file)
+        formData.append('imageLogo', avatar)
+        formData.append('linkLogo', avatar)
+
         
         console.log('formData ',formData.get('name'))
         console.log('formData ',formData.get('description'))
@@ -92,7 +102,7 @@ export default function AccountGeneral() {
 
        try {
         const { data } = await axios.put('https://api.pimo.studio/api/v1/brands', formData, axiosConfig);
-        console.log('hihihi ' ,data)
+         console.log('hihihi ' ,data)
         if(data.success) {
           result = true;
        }else{
