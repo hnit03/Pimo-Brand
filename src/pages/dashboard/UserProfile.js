@@ -43,7 +43,7 @@ const TABLE_HEAD = [
    { id: 'company', label: 'Tài năng', alignRight: false },
    { id: 'role', label: 'Địa chỉ', alignRight: false },
    { id: 'isVerified', label: 'Xác thực', alignRight: false },
-   { id: 'status', label: 'chiến dịch tham gia', alignRight: false },
+   { id: 'status', label: 'Chiến dịch tham gia', alignRight: false },
    { id: '' }
 ];
 
@@ -171,7 +171,7 @@ export default function UserList() {
             />
 
             <Card>
-               <UserListToolbar placeholder='Tìm kiếm nhãn hàng...' numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+               <UserListToolbar placeholder='Tìm kiếm người mẫu...' numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
                <Scrollbar>
                   <TableContainer sx={{ minWidth: 800 }}>
@@ -223,7 +223,7 @@ export default function UserList() {
                                     </TableCell>
 
                                     <TableCell align="right">
-                                       <BrandMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} />
+                                       <BrandMoreMenu onDelete={() => handleDeleteUser(id)} userName={name} castingName={country}/>
                                     </TableCell>
                                  </TableRow>
                               );

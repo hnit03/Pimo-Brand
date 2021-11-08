@@ -128,7 +128,7 @@ export default function Router() {
            { path: 'cards', element: <UserCards /> },
            { path: 'list', element: <UserList /> },
            { path: 'new', element: <BrandCreate /> },
-           { path: '/:name/edit', element: <BrandCreate /> },
+           { path: '/:name/:country/edit', element: <BrandCreate /> },
            { path: 'account', element: <UserAccount /> }
          ]
        },

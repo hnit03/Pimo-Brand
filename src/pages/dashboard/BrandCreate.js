@@ -21,10 +21,13 @@ export default function BrandCreate() {
   const { themeStretch } = useSettings();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
-  const { name } = useParams();
-  const { userList } = useSelector((state) => state.user);
+  const { name,country } = useParams();
+  console.log('country ',country)
+   const { userList } = useSelector((state) => state.user);
   const isEdit = pathname.includes('edit');
-  const currentUser = userList.find((user) => paramCase(user.name) === name);
+  const currentUser = userList.find((user) => (
+    paramCase(user.name) === name && paramCase(user.country) === country
+  ));
 
   useEffect(() => {
     dispatch(getApplyList());
@@ -33,14 +36,14 @@ export default function BrandCreate() {
   return (
     <Page title="User: Create a new user | Minimal-UI">
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <HeaderBreadcrumbs
+        {/* <HeaderBreadcrumbs
           heading={!isEdit ? 'Tạo mới nhãn hàng' : 'Thông tin'}
           links={[
             { name: 'Trang chủ', href: PATH_DASHBOARD.root },
             { name: 'Người mẫu', href: PATH_DASHBOARD.user.profile },
             { name: !isEdit ? 'Tạo mới nhãn hàng' : name }
           ]}
-        />
+        /> */}
 
         <BrandNewForm isEdit={isEdit} currentUser={currentUser} />
       </Container>

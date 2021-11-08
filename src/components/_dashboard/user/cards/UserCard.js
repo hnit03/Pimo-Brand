@@ -126,7 +126,6 @@ export default function UserCard({ user, ...other }) {
     console.log('eee ',id_casting)
     const accessToken = JSCookies.get('jwt')
     var resultCastingBrowser = false;
-    // var resultCastingApply = false;
     let axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -134,9 +133,7 @@ export default function UserCard({ user, ...other }) {
          'authorization': 'Bearer ' + accessToken
       }
    };
-    // var formData = new FormData();
-    // formData.append('modelId', id_model)
-    // formData.append('castingId', id_casting)
+
     var postData = {
       modelId : id_model,
       castingId : id_casting,
@@ -234,12 +231,12 @@ export default function UserCard({ user, ...other }) {
           variant="subtitle1"
           align="center"
         >
-          {castingName}
+          {name}
         </Typography>
         {/* <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
         {gift}
       </Typography> */}
-        <Typography
+        {/* <Typography
           style={{ marginTop: "3.5rem" }}
           variant="subtitle1"
           align="center"
@@ -280,7 +277,7 @@ export default function UserCard({ user, ...other }) {
               {name}
             </p>
           </div>
-        </Typography>
+        </Typography> */}
 
         <Typography
           style={{margin:0}}
@@ -384,6 +381,7 @@ export default function UserCard({ user, ...other }) {
               display: "flex",
               justifyContent: "space-between",
               marginLeft: "0.7rem",
+           
             }}
           >
             <div
@@ -415,7 +413,27 @@ export default function UserCard({ user, ...other }) {
             </p>
           </div>
         </Typography>
-
+        <Typography
+          style={{ margin: 0,marginTop:'1rem',borderTop:'0.1rem solid #f0e8e6' }}
+          variant="subtitle1"
+          align="center"
+          sx={{ mt: 6 }}
+        >
+        </Typography>
+        <Typography
+          style={{ marginTop: "0.5rem", height: "2rem", fontSize: "1.25rem" }}
+          variant="subtitle1"
+          align="center"
+        >
+          {castingName}
+        </Typography>
+        <Typography
+          style={{ margin: 0,marginTop:'2rem',borderTop:'0.1rem solid #f0e8e6' }}
+          variant="subtitle1"
+          align="center"
+          sx={{ mt: 6 }}
+        >
+        </Typography>
         {/* <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
         {position}
       </Typography> */}
@@ -438,25 +456,21 @@ export default function UserCard({ user, ...other }) {
           display: "flex",
           justifyContent: "space-around",
           paddingBottom: "1.5rem",
+          marginTop:'1.5rem'
         }}
       >
        
         <Button
           variant="contained"
-          //  component={RouterLink}
-          //  to={PATH_DASHBOARD.user.newUser}
-          //  startIcon={<Icon icon={plusFill} />}
-          style={{ backgroundColor: "#FF3030" }}
+          style={{ backgroundColor: "#FF3030",width:'8.5rem',height:'2.8rem' }}
           onClick={(e) => handleCancelApply(e)}
+          
         >
           Từ chối
         </Button>
         <Button
-          variant="contained"
-          //  component={RouterLink}
-          //  to={PATH_DASHBOARD.user.newUser}
-          //  startIcon={<Icon icon={plusFill} />}
-          style={{ backgroundColor: "#00AB55" }}
+          variant="contained" 
+          style={{ backgroundColor: "#00AB55",width:'8.5rem',height:'2.8rem'  }}
           onClick={(e) => handleApply(e)}
         >
           Chấp nhận

@@ -26,9 +26,12 @@ import {
   CastingMoreMenu,
 } from "../../../../components/_dashboard/user/list";
 import { useDispatch, useSelector } from "../../../../redux/store";
-import { getUserList, deleteUser } from "../../../../redux/slices/user";
+import { getUserList, deleteUser,getCastings } from "../../../../redux/slices/user";
 import TodayIcon from "@mui/icons-material/Today";
 import LocationOn from "@material-ui/icons/LocationOn";
+import axios from 'axios';
+import JSCookies from 'js-cookie';
+import { useSnackbar } from 'notistack5';
 
 // ----------------------------------------------------------------------
 
@@ -134,24 +137,43 @@ export default function CastingCard({ user, ...other }) {
     state,
     city,
     status,
+    id
   } = user;
   // console.log("status ", status);
   var open_time = formatDate(new Date(state));
   var close_time = formatDate(new Date(city));
-
+  const { enqueueSnackbar } = useSnackbar();
   // console.log('user ',user)
   var statusCasting ='';
-  if(new Date().getDate() < new Date(city).getDate() && status === 'active'){
+  if(new Date().getDate() <= new Date(city).getDate() && status === 'active'){
     statusCasting = 'Đang diễn ra'
   }else if(new Date().getDate() > new Date(city).getDate() && status === 'banned'){
     statusCasting ='Đã kết thúc';
-  }else if(new Date().getDate() < new Date(city).getDate() && status === 'banned'){
+  }else if(new Date().getDate() <= new Date(city).getDate() && status === 'banned'){
     statusCasting ='Đang chờ duyệt';
-  }
+  } 
   const dispatch = useDispatch();
 
-  const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId));
+  const handleDeleteUser = async (userId) => {
+    const accessToken = JSCookies.get('jwt')
+    let axiosConfig = {
+      headers: {
+         'Content-Type': 'application/json',
+         "Access-Control-Allow-Origin": "*",
+         'authorization': 'Bearer ' + accessToken
+      }
+   };
+    try {
+      const { data } = await axios.delete(`https://api.pimo.studio/api/v1/castings/${id}`, axiosConfig);
+       if(data.success) {
+          enqueueSnackbar('Xóa thành công', { variant: 'success' });
+          dispatch(getCastings())
+
+     }else{
+       enqueueSnackbar('Xóa không thành công', { variant: 'error' });
+     }
+      } catch (error) {
+     }
   };
   return (
     <Card {...other}>
@@ -198,7 +220,7 @@ export default function CastingCard({ user, ...other }) {
           height: "1.6rem",
         }}
       >
-        <CastingMoreMenu onDelete={() => handleDeleteUser(1)} userName={name} />
+        <CastingMoreMenu onDelete={(e) => handleDeleteUser(e)} userName={name} />
       </div>
       {/* <Typography variant="subtitle1" align="center" sx={{ mt: 6 }}>
         {name}
@@ -266,7 +288,6 @@ export default function CastingCard({ user, ...other }) {
           <span style={{ marginLeft: "0.3rem", color: "grey" }}>{address}</span>
         </div>
       </Typography>
-
       {/* <Box sx={{ textAlign: "center", mt: 2, mb: 2.5 }}>
         {SOCIALS.map((social) => (
           <Tooltip key={social.name} title={social.name}>

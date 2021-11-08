@@ -123,7 +123,7 @@ export default function AccountBillingPaymentMethod({ formik, cards, isOpen, onO
          </Grid>
 
          <Box sx={{ mt: 3 }}>
-            <Button size="small" startIcon={<Icon icon={plusFill} />} onClick={onOpen}>
+            <Button style={{color:'rgb(255, 147, 166)'}} size="small" startIcon={<Icon style={{color:'rgb(255, 147, 166)'}} icon={plusFill} />} onClick={onOpen}>
                Thêm thẻ mới
             </Button>
          </Box>
@@ -212,7 +212,7 @@ export default function AccountBillingPaymentMethod({ formik, cards, isOpen, onO
                            <Button type="button" color="inherit" variant="outlined" onClick={onCancel}>
                               Hủy
                            </Button>
-                           <LoadingButton type="submit" variant="contained" onClick={(e) => submitEvent(e)}>
+                           <LoadingButton style={{backgroundColor:'rgb(255, 147, 166)'}} type="submit" variant="contained" onClick={(e) => submitEvent(e)}>
                               Lưu thay đổi
                            </LoadingButton>
                         </Stack>

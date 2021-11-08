@@ -344,12 +344,11 @@ mock.onGet('/api/user/manage-apply-list').reply(async () => {
    data.castingBrowses.map(model => (
       IMAGE.push(model.model.avatar)
    ));
-   // var ID = []
-   // data.castingBrowses.map(model => (
-   //    ID.push(model.model.id)
-   // ));
-   // console.log('ID ',ID)
-   var EMAIL = []
+   var ID_MODEL = []
+   data.castingBrowses.map(model => (
+      ID_MODEL.push(model.model.id)
+   ));
+    var EMAIL = []
    data.castingBrowses.map(model => (
       EMAIL.push(model.model.mail)
    ));
@@ -389,10 +388,16 @@ mock.onGet('/api/user/manage-apply-list').reply(async () => {
    data.castingBrowses.map(casting => (
       CASTING_NAME.push(casting.casting.name)
    ));
+   var ID_CASTING = []
+   data.castingBrowses.map(casting => (
+      ID_CASTING.push(casting.casting.id)
+   ));
+   console.log('ID_CAS ',ID_CASTING)
    const users = [...Array(data.castingBrowses.length)].map((_, index) => {
       const setIndex = index + 1;
       return {
-         id: createId(setIndex),
+         id_model: ID_MODEL[index],
+         id_casting: ID_CASTING[index],
          avatarUrl: IMAGE[index],
          name: NAME[index],
          email: EMAIL[index],
@@ -404,6 +409,9 @@ mock.onGet('/api/user/manage-apply-list').reply(async () => {
          zipCode: BIRTH[index],
          company: GIFTED[index],
          isVerified: true,
+         openTime: '',
+         closeTime: '',
+         salary:0,
          status: STATUS[index] ? ('active') : ('banned'),
          role: COUNTRY[index] + " " + DISTRICT[index] + " " + PROVINCE[index],
       }
