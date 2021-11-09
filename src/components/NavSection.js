@@ -24,7 +24,7 @@ const ListItemStyle = styled((props) => <ListItemButton disableGutters {...props
   ...theme.typography.body2,
   height: 48,
   position: 'relative',
-  textTransform: 'capitalize',
+  // textTransform: 'capitalize',
   paddingLeft: theme.spacing(5),
   paddingRight: theme.spacing(2.5),
   color: theme.palette.text.secondary,
@@ -117,6 +117,7 @@ function NavItem({ item, active, isShow }) {
                     key={title}
                     component={RouterLink}
                     to={path}
+                    
                     sx={{
                       ...(isActiveSub && activeSubStyle)
                     }}
@@ -187,7 +188,7 @@ export default function NavSection({ navConfig, isShow = true, ...other }) {
           <List key={subheader} disablePadding>
             {isShow && <ListSubheaderStyle>{subheader}</ListSubheaderStyle>}
             {items.map((item) => (
-              <NavItem key={item.title} item={item} active={match} isShow={isShow} />
+               <NavItem key={item.title} item={item} active={match} isShow={isShow} />
             ))}
           </List>
         );

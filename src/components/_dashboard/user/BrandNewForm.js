@@ -35,6 +35,7 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import Slider from "@mui/material/Slider";
 import JSCookies from 'js-cookie';
 import Cookies from 'universal-cookie';
+import db from '../../../adapter/firebase'
  // ----------------------------------------------------------------------
 
 BrandNewForm.propTypes = {
@@ -115,6 +116,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
         var CLOSE_TIME = formatDate(new Date(values.closeTime))
             const accessToken = JSCookies.get('jwt')
             var result = false;
+            var resultBrowser = false
                let axiosConfig = {
                headers: {
                   'Content-Type': 'application/json',
@@ -151,13 +153,43 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                       }
                      const { data } = await axios.post('https://api.pimo.studio/api/v1/tasks', postTaskData, axiosConfig);
                      if(data.success) {
+                        resultBrowser = true;
+                        db.collection("history")
+                        .add({
+                           dateCreate : new Date(),
+                           modelName : values.name,
+                           nameCasting : values.country,
+                           value : values.salary,
+                        })
+
                         console.log('task ',data.success)
-                        enqueueSnackbar(!isEdit ? 'Create success' : 'Lưu tác vụ thành công', { variant: 'success' });
+                       
                   }else{
-                     enqueueSnackbar(!isEdit ? 'Create success' : 'Lưu tác vụ không thành công', { variant: 'error' });
+                     resultBrowser = false;
+                     
                   }
               
                   }
+
+                  if(resultBrowser){
+                     var postBrowserData = {
+                        modelId : values.id_model,
+                        castingId : values.id_casting,
+                        status:true
+                      }
+                  
+                        try {
+                          const { data } = await axios.put('https://api.pimo.studio/api/v1/browses', postBrowserData, axiosConfig);
+                           if(data.success) {
+                              enqueueSnackbar(!isEdit ? 'Create success' : 'Lưu tác vụ thành công', { variant: 'success' });
+                          }else{
+                           enqueueSnackbar(!isEdit ? 'Create success' : 'Lưu tác vụ không thành công', { variant: 'error' });
+                            }
+                          } catch (error) {
+                            }
+                   }
+
+
 
             resetForm();
             setSubmitting(false);
@@ -316,7 +348,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                      <div
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           paddingBottom: "1.5rem",
           marginTop:'1.5rem'
         }}
@@ -326,7 +358,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
        <>
         <Button
           variant="contained"
-          style={{ backgroundColor: "#FF3030",width:'8.5rem',height:'2.8rem' }}
+          style={{ backgroundColor: "#FF3030",width:'8rem',height:'2.5rem' }}
           onClick={(e) => handleFail(e)}
           
         >
@@ -334,7 +366,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
         </Button>
         <Button
           variant="contained" 
-          style={{ backgroundColor: "#00AB55",width:'8.5rem',height:'2.8rem'  }}
+          style={{ backgroundColor: "#00AB55",width:'8rem',height:'2.5rem'  }}
           onClick={(e) => handlePass(e)}
         >
           Đậu
@@ -582,10 +614,13 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                   <p>Mức lương</p>
                   </Stack>
                         {/* <TextField {...getFieldProps('city')} fullWidth multiline minRows={4} maxRows={4} label="Mô tả" /> */}
-                        <Slider
+                       <div  style={{textAlign: 'center'}}>
+                       <Slider
                     aria-label="Temperature"
-                  
-                     max={10000}
+                  min={1000000}
+                  step={500000}
+                     max={50000000}
+                     style={{zIndex:1000,width:'93%'}}
                     {...getFieldProps("salary")}
                     error={Boolean(touched.salary && errors.salary)}
                     helperText={touched.salary && errors.salary}
@@ -609,6 +644,7 @@ export default function BrandNewForm({ isEdit, currentUser }) {
                       },
                     }}
                   />
+                       </div>
                        
                         <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
                            <LoadingButton style={{backgroundColor:'rgb(255, 147, 166)'}} type="submit" variant="contained" loading={isSubmitting}>

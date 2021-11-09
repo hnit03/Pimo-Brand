@@ -98,7 +98,7 @@ const sidebarConfig = [
          //   info: <Label color="error">2</Label>
          },
          {
-            title: 'Người mẫu đã Apply',
+            title: 'Người mẫu đã ứng tuyển',
             path: PATH_DASHBOARD.user.cards,
           //   icon: ICONS.mail,
           //   info: <Label color="error">2</Label>

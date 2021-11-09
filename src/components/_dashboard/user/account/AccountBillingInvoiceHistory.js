@@ -23,7 +23,8 @@ export default function AccountBillingInvoiceHistory({ invoices }) {
    var item_firebase = []
 
    const fetchBlogs = async () => {
-      const response = db.collection('history');
+      const response = db.collection('history').orderBy('dateCreate','desc');
+
       const data = await response.get();
       data.docs.forEach(item => {
          item_firebase.push({ ...item.data(), id: item.id })

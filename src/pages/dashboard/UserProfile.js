@@ -149,7 +149,7 @@ export default function UserList() {
    const isUserNotFound = filteredUsers.length === 0;
 
    return (
-      <Page title="User: List | Minimal-UI">
+      <Page title="Người mẫu">
          <Container maxWidth={themeStretch ? false : 'lg'}>
             <HeaderBreadcrumbs
                heading="Danh sách người mẫu"

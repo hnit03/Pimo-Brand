@@ -27,7 +27,8 @@ const Page = forwardRef(({ children, title = '', ...other }, ref) => {
     <Box ref={ref} {...other}>
       <Helmet>
         <title>{title}</title>
-       </Helmet>
+      
+        </Helmet>
       {children}
     </Box>
   );
@@ -35,7 +36,8 @@ const Page = forwardRef(({ children, title = '', ...other }, ref) => {
 
 Page.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string
+  title: PropTypes.string,
+  image : PropTypes.string,
 };
 
 export default Page;

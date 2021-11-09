@@ -41,7 +41,7 @@ export default function UserCards() {
     // changeURL(value);
  };
   return (
-    <Page title="User: Cards | Minimal-UI">
+    <Page title="Ứng tuyển">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading="Người mẫu Apply"

@@ -462,7 +462,7 @@ export default function UserCard({ user, ...other }) {
        
         <Button
           variant="contained"
-          style={{ backgroundColor: "#FF3030",width:'8.5rem',height:'2.8rem' }}
+          style={{ backgroundColor: "#FF3030",width:'8.6rem',height:'2.5rem' }}
           onClick={(e) => handleCancelApply(e)}
           
         >
@@ -470,7 +470,7 @@ export default function UserCard({ user, ...other }) {
         </Button>
         <Button
           variant="contained" 
-          style={{ backgroundColor: "#00AB55",width:'8.5rem',height:'2.8rem'  }}
+          style={{ backgroundColor: "#00AB55",width:'8.6rem',height:'2.5rem'  }}
           onClick={(e) => handleApply(e)}
         >
           Chấp nhận
